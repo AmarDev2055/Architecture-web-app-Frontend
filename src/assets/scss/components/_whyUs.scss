@@ -1,0 +1,142 @@
+@use "../base/variable" as *;
+
+// Design Variables
+$color-primary: #002E63;       // Deep navy blue
+$color-secondary: #0047AB;     // Muted slate blue
+$color-accent: #D90429;        // Gold accent
+$color-background: #F4F6F9;    // Soft light blue-gray
+$color-text-primary: #1A2B3C;
+$color-text-secondary: #4A5F73;
+
+// Mixins
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin transition-smooth {
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+// Architectural Expertise Styles
+.architectural-expertise {
+  // background-color: $color-background;
+  background: url('../../assets/images/red-blue6.jpg') no-repeat center center/cover;
+  padding: 6rem 0;
+  overflow: hidden;
+
+  &__container {
+    max-width: 1250px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  &__title {
+    text-align: center;
+    font-size: 2.125rem;
+    color: $color-primary;
+    margin-bottom: 4rem;
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -15px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 120px;
+      height: 3px;
+      background-color: $color-accent;
+    }
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+
+    @media (max-width: 1024px) {
+      grid-template-columns: 1fr;
+    }
+  }
+}
+
+.expertise-card {
+  background-color: white;
+  border-radius: 12px;
+  padding: 2.5rem;
+  text-align: center;
+  box-shadow: 0 15px 35px rgba(50, 50, 93, 0.08);
+  @include transition-smooth;
+
+  &:hover {
+    transform: translateY(-15px);
+    box-shadow: 0 20px 45px rgba(50, 50, 93, 0.12);
+  }
+
+  &__icon {
+    @include flex-center;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-color: rgba($color-accent, 0.1);
+    margin: 0 auto 1.5rem;
+    color: $color-accent;
+  }
+
+  &__title {
+    font-size: 1.3rem;
+    color: $color-primary;
+    margin-bottom: 1.25rem;
+    font-weight: 600;
+  }
+
+  &__description {
+    color: $color-text-secondary;
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+    // text-align: justify;
+  }
+
+  &__details {
+    list-style-type: none;
+    padding: 0;
+    text-align: left;
+
+    li {
+      position: relative;
+      padding-left: 1.5rem;
+      margin-bottom: 0.75rem;
+      color: $color-text-secondary;
+
+      &::before {
+        content: '•';
+        position: absolute;
+        left: 0;
+        color: $color-accent;
+        font-weight: bold;
+      }
+    }
+  }
+}
+
+// Responsive Adjustments
+@media (max-width: 768px) {
+  .architectural-expertise {
+    &__title {
+      font-size: 2.25rem;
+    }
+  }
+
+  .expertise-card {
+    padding: 2rem;
+
+    &__icon {
+      width: 100px;
+      height: 100px;
+    }
+  }
+}

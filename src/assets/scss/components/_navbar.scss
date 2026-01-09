@@ -1,0 +1,330 @@
+@use "../base/variable" as *;
+
+// Common Breakpoints
+$break-lg: 1200px;
+$break-md: 992px;
+$break-sm: 768px;
+
+// Top Bar Styles
+.top-bar {
+  background: $secondary;
+  padding: 10px 0;
+  color: $white;
+
+  &-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+
+    @media (max-width: $break-sm) {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+
+  .contact-info {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+
+    @media (max-width: $break-md) {
+      gap: 10px;
+    }
+
+    @media (max-width: $break-sm) {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 5px;
+    }
+
+    a,
+    span {
+      color: $white;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+
+      &:hover {
+        color: $primary;
+      }
+
+      .anticon {
+        font-size: 16px;
+      }
+    }
+  }
+
+  .social-links {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+
+    a {
+      width: 32px;
+      height: 32px;
+      padding: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background-color: white;
+      transition: all 0.3s ease;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+
+      &:hover {
+        background-color: $secondary;
+        transform: translateY(-1px);
+      }
+    }
+
+    @media (max-width: $break-sm) {
+      gap: 5px;
+    }
+  }
+}
+
+@media screen and (max-width: 770px) {
+  .top-bar {
+    display: none;
+  }
+}
+// Header Styles
+.header {
+  background: transparent;
+  padding: 20px 0;
+  position: absolute;
+  width: 100%;
+  z-index: 100;
+
+  &-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &-logo {
+    a {
+      width: 135px;
+      display: flex;
+      align-items: center;
+
+      @media (max-width: $break-sm) {
+        width: 90px;
+      }
+
+      img {
+        width: 115%;
+      }
+    }
+  }
+
+  .header-list {
+    @media (max-width: $break-md) {
+      gap: 0 0px;
+    }
+  }
+
+  &-list {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0 50px;
+    flex: 1;
+    justify-content: center;
+    gap: 20px;
+
+    li {
+      a {
+        color: $white;
+        font-weight: 600;
+        font-size: 1.1rem;
+        position: relative; // Needed for ::after positioning
+        transition: color 0.3s ease;
+
+        &::after {
+          content: "";
+          position: absolute;
+          bottom: 0;
+          bottom: -4px;
+          left: 0;
+          width: 0%;
+          height: 2px;
+          background-color: $white;
+          transition: width 0.5s ease;
+        }
+
+        &:hover::after {
+          width: 100%;
+        }
+      }
+
+      &.menuButtonListDesk {
+        display: block;
+
+        @media (max-width: $break-sm) {
+          display: none;
+        }
+      }
+
+      &.menuButtonList {
+        display: none;
+
+        @media (max-width: $break-sm) {
+          display: block;
+        }
+
+        .menuButton {
+          padding: 0;
+
+          span svg {
+            color: $white;
+            font-size: 20px;
+          }
+        }
+      }
+
+      @media (max-width: $break-md) {
+        padding: 0 0px;
+      }
+
+      @media (max-width: $break-sm) {
+        padding: 0 5px;
+      }
+    }
+
+    @media (max-width: $break-md) {
+      margin: 0 0px;
+    }
+  }
+
+  .auth-section {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    .menuButton {
+      display: none;
+    }
+
+    @media (max-width: 768px) {
+      .menuButton {
+        display: inline-flex;
+        margin-left: 8px;
+        color: white;
+        font-size: 1.225rem;
+      }
+    }
+  }
+}
+
+// Mobile Menu Styles
+.header-list-mobile {
+  list-style: none;
+  padding: 0;
+
+  li {
+    a {
+      padding: 15px;
+      display: block;
+      color: $black;
+      font-weight: 600;
+      border-radius: 4px;
+      transition: all 0.3s ease;
+
+      &:hover {
+        background: $primary;
+        color: $white;
+      }
+    }
+  }
+}
+/* Show only below 770px */
+@media screen and (max-width: 769px) {
+  .mobile-top-bar {
+    display: block;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+  }
+
+  .mobile-top-bar .contact-info a,
+  .mobile-top-bar .contact-info span {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 14px;
+  }
+
+  .mobile-top-bar .social-links {
+    margin-top: 10px;
+  }
+
+  .mobile-top-bar .social-links img {
+    width: 20px;
+    margin-right: 8px;
+  }
+
+  .social-links {
+    display: flex;
+    gap: 12px;
+  }
+
+  .mobile-divider {
+    border: none;
+    height: 1px;
+    background-color: #be1e2d;
+    margin: 15px 0;
+  }
+  .top-bar {
+    background: #ffffff; /* white background */
+
+    padding: 10px;
+  }
+}
+.top-barr .contact-information .con {
+  color: black;
+  font-weight: 600;
+  gap: 4px;
+  display: flex;
+}
+.contact-information {
+  display: inline-grid;
+  gap: 27px;
+  margin-bottom: 25px;
+}
+
+.top-barr h1 {
+  font-size: 16px;
+  font-weight: 600;
+  color: #be1e2d;
+  margin: 20px 0;
+}
+/* Hide above 769px (770px and more) */
+@media screen and (min-width: 770px) {
+  .mobile-top-bar {
+    display: none;
+  }
+}
+
+// Dropdown Styles
+.ant-dropdown-menu {
+  border-radius: 5px;
+  padding: 0;
+  overflow: hidden;
+
+  &-item {
+    padding: 10px 15px;
+
+    &:hover {
+      background: $primary;
+      color: $white;
+    }
+  }
+}

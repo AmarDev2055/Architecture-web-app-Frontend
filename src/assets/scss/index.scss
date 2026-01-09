@@ -1,0 +1,27 @@
+@use "sass:color";
+@use "base/font";
+@use "base/variable";
+@use "base/base";
+
+@use "components/navbar";
+@use "components/banner";
+@use "components/footer";
+@use "components/contactUsSection";
+@use "components/project_contact_section";
+@use "components/project_section";
+@use "components/youtubeVideoSection";
+@use "components/testimonial";
+@use "components/whyUs";
+@use "components/serviceSection";
+@use "components/trustedClients";
+
+@use "pages/homepage";
+@use "pages/aboutUs";
+@use "pages/login";
+@use "pages/projects";
+@use "pages/project_details";
+@use "pages/services";
+@use "pages/inner_page";
+@use "pages/projectInnerHeader";
+@use "pages/dashboard";
+@use "pages/blogs";
