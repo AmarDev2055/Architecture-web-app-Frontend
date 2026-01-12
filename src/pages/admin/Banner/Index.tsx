@@ -119,8 +119,8 @@ const BannerSettings = () => {
         name="banner_settings"
         initialValues={initialValues}
       >
-        <Row gutter={[50, 10]}>
-          <Col sm={24} lg={12}>
+        <Row gutter={[24, 16]}>
+          <Col xs={24} sm={24} md={24} lg={24}>
             <Form.Item<FieldType>
               label="Heading"
               name="heading"
@@ -130,7 +130,7 @@ const BannerSettings = () => {
             </Form.Item>
           </Col>
 
-          <Col sm={24} lg={12}>
+          <Col xs={24} sm={24} md={24} lg={24}>
             <Form.Item<FieldType>
               label="Sub Heading"
               name="subHeading"
@@ -140,7 +140,7 @@ const BannerSettings = () => {
             </Form.Item>
           </Col>
 
-          <Col sm={24}>
+          <Col xs={24} sm={24} md={24} lg={24}>
             <Form.Item<FieldType>
               label="Description"
               name="description"
@@ -154,7 +154,7 @@ const BannerSettings = () => {
             </Form.Item>
           </Col>
 
-          <Col sm={24} lg={12}>
+          <Col xs={24} sm={24} md={12} lg={12}>
             <Form.Item
               label="Banner Video"
               name="videoFile"
@@ -176,12 +176,17 @@ const BannerSettings = () => {
             </Form.Item>
           </Col>
 
-          <Col sm={24}>
+          <Col xs={24} sm={24} md={24} lg={24}>
             <Button
               type="primary"
               onClick={handleSubmit}
-              size="large"
               loading={loading}
+              style={{ 
+                height: '40px', 
+                padding: '0 24px', 
+                fontSize: '14px',
+                fontWeight: 500
+              }}
             >
               Submit
             </Button>
