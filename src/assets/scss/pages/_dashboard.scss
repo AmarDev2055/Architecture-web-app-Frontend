@@ -235,13 +235,131 @@
   .ant-upload.ant-upload-select {
     display: block;
   }
+
+  // Table header styling
+  .ant-table-thead > tr > th {
+    color: #7b7979 !important;
+    text-transform: uppercase;
+    font-weight: 600;
+    // background-color: #878787 !important;
+    border: 0.5px solid #e8e8e8 !important;
+  }
+
+  // // Table body borders
+  // .ant-table-tbody > tr > td {
+  //   border: 0.5px solid #f0f0f0 !important;
+  // }
+
+  // // Table wrapper border
+  // .ant-table {
+  //   border: 0.5px solid #e8e8e8;
+  //   border-radius: 8px;
+  //   overflow: hidden;
+  // }
+
+  // Mobile Drawer Styles
+  .mobile-drawer {
+    .ant-drawer-body {
+      background-color: #2b2b5a !important;
+      padding: 0 !important;
+    }
+
+    .dashboard-logo {
+      width: 100%;
+      padding: 10px 50px;
+      display: block;
+      
+      img {
+        width: 100%;
+      }
+    }
+
+    hr {
+      border-color: rgba(255, 255, 255, 0.1);
+      margin: 0;
+    }
+  }
+
+  // Responsive Styles
+  @media (max-width: 768px) {
+    .desktop-sider {
+      display: none !important;
+    }
+
+    &-nav {
+      padding: 0 12px !important;
+
+      span {
+        font-size: 16px;
+      }
+    }
+
+    &-content {
+      margin: 12px 8px !important;
+      padding: 20px 16px !important;
+    }
+
+    &-Headings {
+      font-size: 1.4rem !important;
+      margin-bottom: 20px !important;
+    }
+
+    // Button containers responsive
+    .button-container {
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+
+      .ant-btn {
+        // Keep natural button width, don't force full width
+        flex-shrink: 0;
+      }
+
+      .ant-input-search {
+        flex: 1;
+        min-width: 200px;
+      }
+    }
+  }
+
+  @media (min-width: 769px) and (max-width: 1024px) {
+    &-content {
+      margin: 20px 12px;
+      padding: 30px 40px;
+    }
+
+    &-Headings {
+      font-size: 1.6rem;
+    }
+  }
+
+  @media (min-width: 1025px) {
+    .mobile-drawer {
+      display: none;
+    }
+  }
 }
 
 // styles/_testimonialModal.scss
 
-.create-btn{
-  height: 2.6rem;
-  width: 7.5rem;
+.create-btn {
+  height: 36px !important;
+  padding: 0 20px !important;
+  font-size: 14px !important;
+  border-radius: 6px !important;
+  font-weight: 500 !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+  transition: all 0.3s ease !important;
+
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15) !important;
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
 }
 .ant-input-search .ant-input-affix-wrapper {
   height:45px;
