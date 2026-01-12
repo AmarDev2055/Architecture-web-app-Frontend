@@ -241,10 +241,13 @@ const TestimonialSetting = () => {
         <div>
           <div className="dashboard-Headings">Testimonial Informations</div>
           <div
+            className="button-container"
             style={{
               marginBottom: "16px",
               display: "flex",
               justifyContent: "space-between",
+              flexWrap: "wrap",
+              gap: "12px",
             }}
           >
             <Button
