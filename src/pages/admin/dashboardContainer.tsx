@@ -33,6 +33,11 @@ const items = [
     label: "Testimonial Settings",
   },
   {
+    key: "teams",
+    icon: <TeamOutlined />,
+    label: "Team Settings", // Or "Teams"
+  },
+  {
     key: "Projects",
     icon: <ProjectOutlined />,
     label: "Project Settings",
@@ -183,9 +188,8 @@ const DashboardContainer = () => {
         >
           <Link
             to="/"
-            className={`dashboard-logo ${
-              collapsed ? "dashboard-logo-collapsed" : ""
-            }`}
+            className={`dashboard-logo ${collapsed ? "dashboard-logo-collapsed" : ""
+              }`}
           >
             <img src={Logo} alt="Logo" />
           </Link>
@@ -209,11 +213,11 @@ const DashboardContainer = () => {
         closable={false}
         className="mobile-drawer"
         width={250}
-        styles={{ 
-          body: { 
-            padding: 0, 
+        styles={{
+          body: {
+            padding: 0,
             background: "#2b2b5a" // Same as desktop sidebar
-          } 
+          }
         }}
       >
         <Link to="/" className="dashboard-logo">

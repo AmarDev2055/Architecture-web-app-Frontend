@@ -1,30 +1,22 @@
-import { useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Button, Col, Form, Input, Row, Typography, message } from "antd";
 import { useLocation } from "react-router-dom";
 import usePostAPI from "../../../hooks/usePostAPI";
 import ScrollToTop from "../../../components/client/ScrollToTop";
 import { Card } from "antd";
 import { motion } from "framer-motion";
-import Picture2 from "../../../assets/images/teamMember/Picture2.png";
-import Picture3 from "../../../assets/images/teamMember/Picture3.png";
-import Picture4 from "../../../assets/images/teamMember/Picture4.png";
-import Picture5 from "../../../assets/images/teamMember/Picture5.png";
-import Picture6 from "../../../assets/images/teamMember/Picture6.png";
-import Picture7 from "../../../assets/images/teamMember/Picture7.png";
-import Picture8 from "../../../assets/images/teamMember/Picture8.jpg";
-import Picture9 from "../../../assets/images/teamMember/Picture9.png";
-import Picture10 from "../../../assets/images/teamMember/Picture10.png";
-import Picture11 from "../../../assets/images/teamMember/Picture11.png";
-import Picture12 from "../../../assets/images/teamMember/Picture12.png";
+import axios from "axios";
+import { apiUrl } from "../../../utils";
 
-// import CeoImage from "../../../assets/images/Founder.jpg";
 interface TeamMember {
   id: number;
   name: string;
-  position: string;
-  additionalInfo: string;
-  image: string;
+  designation: string;
+  order: number;
+  filepath: string | null;
+  additionalInfo?: string;
 }
+
 const AboutUsPage = () => {
   const { TextArea } = Input;
   const { Title, Paragraph } = Typography;
@@ -32,87 +24,25 @@ const AboutUsPage = () => {
   const [form] = Form.useForm();
   const contactRef = useRef(null);
   const location = useLocation();
-  const teamMembers: TeamMember[] = [
-    {
-      id: 1,
-      name: "AR. Rajan Karki",
-      position: "Managing Director Architect",
-      additionalInfo: "",
-      image: Picture2, // Replace with actual image path
-    },
-    {
-      id: 2,
-      name: "AR. Nikita Gautam",
-      position: "Co-Founder | Technical Head Architect",
-      additionalInfo: "",
-      image: Picture3, // Replace with actual image path
-    },
-    {
-      id: 3,
-      name: "MR. Yadu Karki",
-      position: "Reserach and Finance Head",
-      additionalInfo: "",
-      image: Picture4, // Replace with actual image path
-    },
-    {
-      id: 4,
-      name: "MR. Hari Karki",
-      position: "Construction | Material Manager",
-      additionalInfo: "",
-      image: Picture5, // Replace with actual image path
-    },
-    {
-      id: 5,
-      name: "AR. Siva Hari Thapa",
-      position: "Branch Manager | Architect",
-      additionalInfo: "",
-      image: Picture6, // Replace with actual image path
-    },
-    {
-      id: 6,
-      name: "AR. Srijana Chaudhary",
-      position: "Architect | Interior Designer",
-      additionalInfo: "",
-      image: Picture7, // Replace with actual image path
-    },
+  const [teamMembers, setTeamMembers] = useState<TeamMember[]>([]);
 
-    {
-      id: 7,
-      name: "AR. Bindu Regmi",
-      position: "Architect | Vaastu Consultant",
-      additionalInfo: "",
-      image: Picture8, // Replace with actual image path
-    },
+  useEffect(() => {
+    const fetchTeamMembers = async () => {
+      try {
+        const response = await axios.get(`${apiUrl}/architecture-web-app/team-members/featured`);
+        if (response.data && response.data.data) {
+          const members: TeamMember[] = response.data.data;
+          const sortedMembers = members.sort((a, b) => a.order - b.order);
+          setTeamMembers(sortedMembers);
+        }
+      } catch (error) {
+        console.error("Failed to fetch team members:", error);
+      }
+    };
 
-    {
-      id: 8,
-      name: "AR. Shrutika Bhandari",
-      position: "Architect",
-      additionalInfo: "",
-      image: Picture9, // Replace with actual image path
-    },
-    {
-      id: 9,
-      name: "ER. Saideep Ghimire",
-      position: "Site | Civil Engineer",
-      additionalInfo: "",
-      image: Picture10, // Replace with actual image path
-    },
-    {
-      id: 10,
-      name: "ER. Pratik Rimal",
-      position: "Civil Engineer",
-      additionalInfo: "",
-      image: Picture11, // Replace with actual image path
-    },
-    {
-      id: 10,
-      name: "Er. Durgesh Yadav",
-      position: "Civil Engineer | Construction Expert",
-      additionalInfo: "",
-      image: Picture12, // Replace with actual image path
-    },
-  ];
+    fetchTeamMembers();
+  }, []);
+
   useEffect(() => {
     if (location.hash) {
       const element = document.querySelector(location.hash);
@@ -303,7 +233,7 @@ const AboutUsPage = () => {
                     >
                       <div className="team-image-container">
                         <img
-                          src={member.image}
+                          src={member.filepath ? `${apiUrl}/architecture-web-app${member.filepath}` : ""}
                           alt={member.name}
                           className="team-image"
                           onError={(
@@ -319,7 +249,7 @@ const AboutUsPage = () => {
                         <Title level={4} className="team-name">
                           {member.name}
                         </Title>
-                        <div className="team-position">{member.position}</div>
+                        <div className="team-position">{member.designation}</div>
                         {member.additionalInfo && (
                           <p className="education-secondary">
                             {member.additionalInfo}
