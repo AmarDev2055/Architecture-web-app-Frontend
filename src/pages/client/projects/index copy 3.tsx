@@ -5,7 +5,7 @@ import InnerHeader from "../../../components/client/InnerHeader";
 import axios from "axios";
 import { apiUrl } from "../../../utils";
 import ScrollToTop from "../../../components/client/ScrollToTop";
-import "./projects_new.css";
+import "./projects.css";
 
 interface ProjectTypes {
   key: string;
@@ -220,6 +220,235 @@ const Projects = () => {
         </div>
         <ScrollToTop />
       </section>
+
+      <style jsx>{`
+        .project-section {
+          min-height: 100vh;
+          background-color: #fafafa;
+          padding: 48px 0 80px;
+        }
+
+        .project-container {
+          max-width: 1320px;
+          margin: 0 auto;
+          padding: 0 24px;
+        }
+
+        /* Filter Bar */
+        .filter-wrapper {
+          margin-bottom: 48px;
+          border-bottom: 1px solid #e5e5e5;
+        }
+
+        .filter-bar {
+          display: flex;
+          gap: 8px;
+          overflow-x: auto;
+          padding-bottom: 2px;
+          justify-content: center;
+          scrollbar-width: none;
+          -ms-overflow-style: none;
+        }
+
+        .filter-bar::-webkit-scrollbar {
+          display: none;
+        }
+
+        .filter-btn {
+          padding: 12px 24px;
+          background: transparent;
+          border: none;
+          font-size: 18px;
+          font-weight: 500;
+          font-variant: all-small-caps;
+          color: #000000;
+          cursor: pointer;
+          white-space: nowrap;
+          position: relative;
+          transition: color 0.2s ease;
+        }
+
+        .filter-btn:hover {
+          color: #666666;
+        }
+
+        .filter-btn.active {
+          color: #262262;
+          font-weight: 600;
+        }
+
+        .filter-btn.active::after {
+          content: "";
+          position: absolute;
+          bottom: -2px;
+          left: 0;
+          right: 0;
+          height: 2px;
+          background-color: #000;
+        }
+
+        /* Loading */
+        .loading-state {
+          display: flex;
+          justify-content: center;
+          padding: 120px 0;
+        }
+
+        .loader {
+          width: 40px;
+          height: 40px;
+          border: 2px solid #f0f0f0;
+          border-top-color: #000;
+          border-radius: 50%;
+          animation: spin 0.8s linear infinite;
+        }
+
+        .no-projects-icon {
+          margin-bottom: 16px;
+          color: #262262;
+        }
+
+        @keyframes spin {
+          to {
+            transform: rotate(360deg);
+          }
+        }
+
+        /* Projects Grid */
+        .projects-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+          gap: 32px;
+        }
+
+        @media (max-width: 768px) {
+          .projects-grid {
+            grid-template-columns: 1fr;
+            gap: 24px;
+          }
+        }
+
+        /* Project Card */
+        .project-card {
+          background: #fff;
+          cursor: pointer;
+          transition: transform 0.2s ease;
+          overflow: hidden;
+        }
+
+        .project-card:hover {
+          transform: translateY(-4px);
+        }
+
+        .project-image {
+          position: relative;
+          width: 100%;
+          padding-top: 66.67%;
+          background-color: #f5f5f5;
+          overflow: hidden;
+        }
+
+        .project-image img {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          transition: transform 0.4s ease;
+        }
+
+        .project-card:hover .project-image img {
+          transform: scale(1.05);
+        }
+
+        .image-overlay {
+          position: absolute;
+          inset: 0;
+          background: rgba(0, 0, 0, 0.4);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          opacity: 0;
+          transition: opacity 0.3s ease;
+        }
+
+        .project-card:hover .image-overlay {
+          opacity: 1;
+        }
+
+        .view-label {
+          color: #fff;
+          font-size: 14px;
+          font-weight: 500;
+          letter-spacing: 0.5px;
+          text-transform: uppercase;
+        }
+
+        .project-info {
+          padding: 24px;
+        }
+
+        .project-title {
+          font-size: 18px;
+          font-weight: 600;
+          color: #000;
+          margin: 0 0 8px 0;
+          line-height: 1.4;
+        }
+
+        .project-client {
+          font-size: 14px;
+          color: #666;
+          margin: 0 0 4px 0;
+        }
+
+        .project-location {
+          font-size: 13px;
+          color: #999;
+          margin: 0;
+        }
+
+        /* Empty State */
+        .empty-state {
+          grid-column: 1 / -1;
+          text-align: center;
+          padding: 120px 20px;
+        }
+
+        .empty-state p {
+          font-size: 15px;
+          color: #999;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+          .project-section {
+            padding: 32px 0 64px;
+          }
+
+          .project-container {
+            padding: 0 16px;
+          }
+
+          .filter-wrapper {
+            margin-bottom: 32px;
+          }
+
+          .filter-btn {
+            padding: 10px 20px;
+            font-size: 13px;
+          }
+
+          .project-info {
+            padding: 20px;
+          }
+
+          .project-title {
+            font-size: 16px;
+          }
+        }
+      `}</style>
     </>
   );
 };

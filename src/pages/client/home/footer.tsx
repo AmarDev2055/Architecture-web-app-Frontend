@@ -65,8 +65,21 @@ const Footer = () => {
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      Kalanki, Kathmandu
+                      Samakhhusi - 26, Kathmandu Nepal{" "}
                     </a>
+                  </div>
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "8px",
+                    }}
+                  >
+                    <FontAwesomeIcon
+                      icon={faLocationDot}
+                      style={{ color: "#b64141" }}
+                    />
+                    Jhapa, Birtamod
                   </div>
                 </li>
               </ul>
