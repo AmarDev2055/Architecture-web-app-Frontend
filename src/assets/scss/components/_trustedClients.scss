@@ -1,0 +1,200 @@
+@use "../base/variable" as *;
+
+// Design Variables (aligned with WhyUs)
+$color-primary: #002e63; // Deep navy blue
+$color-accent: #d90429; // Red accent
+$color-background: #f4f6f9; // Soft light blue-gray
+$color-text-primary: #1a2b3c;
+$color-text-secondary: #4a5f73;
+
+// Mixins
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin transition-smooth {
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.trusted-clients {
+  background: #ffffff;
+  // background: url('../../assets/images/bg2.jpg') no-repeat center center/cover;
+  padding: 7rem 1rem;
+  overflow: hidden;
+
+  &__container {
+    // max-width: 1250px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  &__title {
+    text-align: center;
+    font-size: 2.125rem;
+    color: $color-primary;
+    margin-bottom: 6rem; // Reduced from 6rem
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    position: relative;
+
+    &::after {
+      content: "";
+      position: absolute;
+      bottom: -15px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 120px;
+      height: 3px;
+      background-color: $color-accent;
+    }
+  }
+
+  &__marquee {
+    overflow: hidden;
+    width: 100%;
+    white-space: nowrap;
+  }
+
+  &__marquee-inner {
+    display: flex;
+    align-items: center;
+  }
+
+  &__logo-wrapper {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 3rem; // Reduced from 3rem
+    text-decoration: none;
+    height: 140px; // Reduced from 200px
+    @include transition-smooth;
+
+    &:hover {
+      transform: scale(1.1);
+      .trusted-clients__logo {
+        filter: brightness(1.1);
+      }
+    }
+  }
+
+  &__logo {
+    height: 120px; // Reduced from 120px
+    max-width: 180px; // Reduced from 200px
+    object-fit: contain; // Changed to contain for better scaling
+    @include transition-smooth;
+  }
+
+  .no-clients-message {
+    text-align: center;
+    color: $color-text-secondary;
+    font-size: 1.2rem;
+    padding: 2rem;
+  }
+
+  .error-container {
+    @include flex-center;
+    min-height: 200px;
+    width: 100%;
+
+    .error-message {
+      color: #ff4d4f;
+      font-size: 1rem;
+      text-align: center;
+    }
+  }
+
+  // Responsive Adjustments
+  @media (max-width: 1024px) {
+    padding: 3.5rem 0;
+
+    &__title {
+      margin-bottom: 3rem; // Further reduced
+    }
+
+    &__logo-wrapper {
+      margin: 0 1.5rem; // Adjusted
+      height: 120px;
+    }
+
+    &__logo {
+      height: 80px;
+      max-width: 140px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    padding: 3rem 0;
+
+    &__title {
+      font-size: 1.8rem;
+      margin-bottom: 2.5rem; // Reduced for mobile
+      &::after {
+        width: 100px;
+      }
+    }
+
+    &__logo-wrapper {
+      margin: 0 1rem;
+      height: 100px;
+    }
+
+    &__logo {
+      height: 80px;
+      max-width: 120px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    padding: 2.125rem 0; // Further reduced
+
+    &__title {
+      font-size: 1.6rem;
+      margin-bottom: 2.5rem; // Minimized for mobile
+      &::after {
+        width: 80px;
+      }
+    }
+
+    &__logo-wrapper {
+      margin: 0 1.2rem;
+      height: 80px;
+    }
+
+    &__logo {
+      height: 90px;
+      max-width: 100px;
+    }
+
+    .no-clients-message {
+      font-size: 1rem;
+      padding: 1rem;
+    }
+
+    .error-container {
+      .error-message {
+        font-size: 0.9rem;
+      }
+    }
+  }
+
+  @media (max-width: 360px) {
+    padding: 1.5rem 0;
+
+    &__title {
+      font-size: 1.4rem;
+      margin-bottom: 2rem;
+    }
+
+    &__logo-wrapper {
+      margin: 0 0.6rem;
+      height: 90px;
+    }
+
+    &__logo {
+      height: 90px;
+      max-width: 90px;
+    }
+  }
+}

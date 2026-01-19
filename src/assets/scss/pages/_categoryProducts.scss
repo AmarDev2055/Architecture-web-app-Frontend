@@ -1,0 +1,114 @@
+@use "../base/variable" as *;
+
+/* === CATEGORY PROJECTS AREA === */
+.category-projects {
+  background: url("../../images/red-blue6.jpg") no-repeat center center/cover;
+  // background-attachment: fixed;
+  // position: relative;
+  // z-index: 01;
+}
+
+.card-body p {
+  font-size: 1.1rem;
+  color: #be1e2d;
+  margin-bottom: 0;
+}
+
+/* === TITLE STYLING === */
+.category-projects .section-title {
+  margin-bottom: 60px;
+  text-align: center;
+}
+
+.category-projects .section-title h2 {
+  font-size: 3rem;
+  font-weight: 700;
+  color: #262262;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  position: relative;
+  display: inline-block;
+}
+
+.category-projects .section-title h2::after {
+  content: "";
+  display: block;
+  width: 70px;
+  height: 5px;
+  background-color: #be1e2d;
+  margin: 14px auto 0;
+  border-radius: 4px;
+}
+
+/* === CARD GRID LAYOUT === */
+.category-projects .row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 40px;
+}
+
+.category-projects .col-md-4 {
+  flex: 0 0 calc(33.33% - 80px);
+  max-width: calc(33.33% - 80px);
+}
+
+@media (max-width: 992px) {
+  .category-projects .col-md-4 {
+    flex: 0 0 calc(50% - 40px);
+    max-width: calc(50% - 40px);
+  }
+}
+
+@media (max-width: 576px) {
+  .category-projects .col-md-4 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+}
+
+/* === CARD STYLING === */
+.category-projects .card {
+  border: none;
+  border-radius: 18px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background: #ffffff;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+}
+
+.category-projects .card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.14);
+}
+
+.category-projects .card-img-top {
+  width: 100%;
+  height: 280px;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.category-projects .card:hover .card-img-top {
+  transform: scale(1.07);
+}
+
+.category-projects .card-body {
+  padding: 24px;
+  text-align: center;
+  background-color: #fff;
+}
+
+.category-projects .card-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #262262;
+  margin-bottom: 10px;
+  text-transform: capitalize;
+  transition: color 0.3s ease;
+}
+
+.category-projects .card:hover .card-title {
+  color: #be1e2d;
+}

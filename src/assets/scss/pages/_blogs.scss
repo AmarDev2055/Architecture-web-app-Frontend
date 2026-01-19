@@ -1,0 +1,312 @@
+@use "../base/variable" as *;
+@use "sass:color";
+
+// Mixins
+@mixin section-padding {
+  padding: 4rem 0;
+  @media (max-width: 768px) {
+    padding: 3rem 0;
+  }
+  @media (max-width: 480px) {
+    padding: 2rem 0;
+  }
+}
+
+@mixin fade-in {
+  animation: fadeIn 0.8s ease-out;
+}
+
+// Animations
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scaleUp {
+  from { transform: scale(1); }
+  to { transform: scale(1.02); }
+}
+
+// Global Styles
+.container {
+  max-width: 1280px; // Increased for wider screens
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+// Blogs Section
+.blogs-section {
+  @include section-padding;
+
+  .section-title-wrapper {
+    margin-bottom: 3rem;
+    text-align: center;
+
+    .section-title {
+      color: $secondary;
+      font-size: 2.25rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      position: relative;
+      margin-bottom: 1rem;
+
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100px;
+        height: 3px;
+        background-color: $primary;
+      }
+    }
+  }
+
+  .blog-card {
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba($dark, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    overflow: hidden;
+    width: 100%;
+    height: 100%; // Changed from 110% to 100%
+    // max-height: 300px;
+    // min-height: 300px;
+    display: flex;
+    flex-direction: column;
+    // margin-bottom: 4rem;
+
+    &:hover {
+      transform: scale(1.02);
+      box-shadow: 0 8px 20px rgba($dark, 0.15);
+    }
+
+    .blog-image {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      border-bottom: 1px solid #e8ecef;
+      flex-shrink: 0; // Prevent image from shrinking
+    }
+
+    .ant-card-body {
+      padding: 1.25rem;
+      flex-grow: 1; // Allow body to grow and fill space
+      display: flex;
+      flex-direction: column;
+
+      .ant-card-meta-title {
+        color: $dark;
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        display: -webkit-box;
+        // -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .ant-card-meta-description {
+        color: #64748b;
+        font-size: 0.875rem;
+
+        .blog-description {
+          display: -webkit-box;
+          // -webkit-line-clamp: 3;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          margin-bottom: 0.5rem;
+        }
+
+        .blog-published {
+          font-size: 0.75rem;
+          color: #94a3b8;
+        }
+      }
+    }
+  }
+
+  .blog-link {
+    text-decoration: none;
+    display: block;
+    height: 100%; // Ensure link covers card
+  }
+
+  .no-blogs {
+    text-align: center;
+    color: #64748b;
+    font-size: 1.125rem;
+    margin-top: 2rem;
+  }
+}
+
+// Responsive Styles
+@media (max-width: 1440px) {
+  .container {
+    max-width: 1200px;
+  }
+
+  .blog-card {
+    .blog-image {
+      aspect-ratio: 16 / 9;
+    }
+  }
+}
+
+@media (max-width: 1024px) {
+  .blog-card {
+    .ant-card-body {
+      padding: 1rem;
+
+      .ant-card-meta-title {
+        font-size: 1.125rem;
+      }
+
+      .ant-card-meta-description {
+        font-size: 0.85rem;
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .blogs-section {
+    .section-title-wrapper {
+      margin-bottom: 2rem;
+
+      .section-title {
+        font-size: 1.875rem;
+
+        &::after {
+          width: 80px;
+        }
+      }
+    }
+
+    .blog-card {
+      .ant-card-body {
+        padding: 0.875rem;
+
+        .ant-card-meta-title {
+          font-size: 1rem;
+        }
+
+        .ant-card-meta-description {
+          font-size: 0.8rem;
+
+          .blog-published {
+            font-size: 0.7rem;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 0 0.5rem;
+  }
+
+  .blogs-section {
+    .section-title-wrapper {
+      margin-bottom: 1.5rem;
+
+      .section-title {
+        font-size: 1.5rem;
+
+        &::after {
+          width: 60px;
+        }
+      }
+    }
+
+    .blog-card {
+      .blog-image {
+        aspect-ratio: 4 / 3; // Slightly squarer for small screens
+      }
+
+      .ant-card-body {
+        padding: 0.75rem;
+      }
+    }
+  }
+}
+
+@media (max-width: 360px) {
+  .blogs-section {
+    .section-title-wrapper {
+      .section-title {
+        font-size: 1.25rem;
+      }
+    }
+
+    .blog-card {
+      .ant-card-meta-title {
+        font-size: 0.875rem;
+      }
+
+      .ant-card-meta-description {
+        font-size: 0.75rem;
+
+        .blog-published {
+          font-size: 0.65rem;
+        }
+      }
+    }
+  }
+}
+
+// Utility Classes
+.fade-in {
+  @include fade-in;
+}
+
+// Scroll to Top Button Styles
+.scroll-to-top {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  background-color: $primary;
+  color: $white;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  z-index: 100;
+
+  &.visible {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  &:hover {
+    background-color: color.adjust($primary, $lightness: -10%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba($primary, 0.3);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+// Print Styles
+@media print {
+  .blogs-section {
+    padding: 1rem 0;
+  }
+
+  .scroll-to-top {
+    display: none;
+  }
+}
