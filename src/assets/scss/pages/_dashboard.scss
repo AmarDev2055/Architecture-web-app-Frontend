@@ -26,7 +26,9 @@
   .sider.light {
     background-color: #ffffff;
   }
+
   .dashboard-menu {
+
     // Main menu items
     .ant-menu-item {
       &:hover {
@@ -37,7 +39,7 @@
           color: rgb(47, 34, 34) !important; // Black icon on hover
         }
       }
-    } 
+    }
 
     .ant-menu-item-selected {
       background-color: white !important; // White background for selected menu item
@@ -50,6 +52,7 @@
 
     // Submenu styles
     .ant-menu-submenu {
+
       // Submenu title (Projects)
       .ant-menu-submenu-title {
         &:hover {
@@ -138,7 +141,8 @@
   }
 
   .ant-dropdown-menu {
-    margin-top: 8px; /* Adjust the value as needed */
+    margin-top: 8px;
+    /* Adjust the value as needed */
   }
 
   .account-container {
@@ -237,7 +241,7 @@
   }
 
   // Table header styling
-  .ant-table-thead > tr > th {
+  .ant-table-thead>tr>th {
     color: #7b7979 !important;
     text-transform: uppercase;
     font-weight: 600;
@@ -268,7 +272,7 @@
       width: 100%;
       padding: 10px 50px;
       display: block;
-      
+
       img {
         width: 100%;
       }
@@ -361,26 +365,33 @@
     transform: translateY(0);
   }
 }
+
 .ant-input-search .ant-input-affix-wrapper {
-  height:45px;
+  height: 45px;
 }
+
 // :where(.css-dev-only-do-not-override-1lmeb6g).ant-input-search 
 .ant-input-search .ant-input-search-button {
   height: 45px;
-  width:  50px;
-  // display: none;
+  width: 50px;
+}
+
+// :where(.css-dev-only-do-not-override-1lmeb6g).ant-input-search
+.ant-input-search .ant-input-search-button {
+  height: 45px;
+  width: 50px;
 }
 
 .testimonial-modal {
   .ant-modal-content {
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    
+
     .ant-modal-header {
       padding: 16px 24px;
       border-bottom: 1px solid #f0f0f0;
       background: #fff;
-      
+
       .ant-modal-title {
         font-size: 18px;
         font-weight: 600;
@@ -390,11 +401,11 @@
 
     .ant-modal-body {
       padding: 24px;
-      
+
       .compact-form {
         .ant-form-item {
           margin-bottom: 14px;
-          
+
           &:last-child {
             margin-bottom: 1.125rem;
           }
@@ -402,69 +413,163 @@
 
         .ant-form-item-label {
           padding-bottom: 8px;
-          
+
           label {
             font-size: 14px;
             font-weight: 500;
             color: #262626;
           }
         }
-        
+
         .ant-input {
           border-radius: 6px;
-          
+
           &:hover,
           &:focus {
             border-color: #262626;
             box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.1);
           }
         }
-        .fullName{
-          height:40px;
-        }
-        .categoryTitle{
-          height:40px;
+
+        .fullName {
+          height: 40px;
         }
 
-        .ant-rate {
-          font-size: 20px;
+        .categoryTitle {
+          height: 40px;
+
+          .fullName {
+            height: 40px;
+          }
+
+          .categoryTitle {
+            height: 40px;
+          }
+
+          .ant-rate {
+            font-size: 20px;
+          }
+
+          .upload-wrapper {
+            .testimonial-upload {
+              .ant-upload.ant-upload-select {
+                width: 100%;
+                height: 70px;
+                border-radius: 6px;
+                background: #fafafa;
+                border: 2px dashed #d9d9d9;
+
+                &:hover {
+                  border-color: #262626;
+                }
+
+                .upload-icon {
+                  font-size: 24px;
+                  color: #999;
+                  margin-top: 7px;
+                  margin-bottom: 5px;
+                  margin-left: 10px;
+                }
+
+                .upload-text {
+                  color: #666;
+                  font-size: 14px;
+                  margin-left: 10px;
+                }
+              }
+
+              .ant-upload-list-picture-card-container {
+                width: 100%;
+                height: 120px;
+
+                .ant-upload-list-picture-card-container {
+                  width: 100%;
+                  height: 120px;
+
+                  .ant-upload-list-item {
+                    padding: 0;
+                    border-radius: 6px;
+                  }
+                }
+              }
+            }
+          }
         }
 
-        .upload-wrapper {
-          .testimonial-upload {
-            .ant-upload.ant-upload-select {
-              width: 100%;
-              height: 70px;
-              border-radius: 6px;
-              background: #fafafa;
-              border: 2px dashed #d9d9d9;
+        .ant-modal-footer {
+          padding: 16px 24px;
+          border-top: 1px solid #f0f0f0;
+
+          .ant-btn {
+            height: 36px;
+            padding: 0 16px;
+            font-size: 14px;
+            border-radius: 6px;
+
+            &-primary {
+              background: #3e1e73;
+
+              &:hover {
+                background: #3e1e73;
+              }
+            }
+          }
+        }
+      }
+
+      &.delete-modal {
+        .ant-modal-content {
+          .ant-modal-body {
+            padding: 32px 24px;
+
+            .delete-content {
+              text-align: center;
+
+              .warning-icon {
+                font-size: 48px;
+                color: #ff4d4f;
+                margin-bottom: 16px;
+              }
+
+              .delete-message {
+                font-size: 16px;
+                color: #262626;
+                margin-bottom: 8px;
+
+                strong {
+                  color: #262626;
+                  font-weight: 600;
+                }
+              }
+
+              .delete-warning {
+                font-size: 14px;
+                color: #8c8c8c;
+                margin-bottom: 0;
+              }
+            }
+          }
+
+          .ant-modal-footer {
+            .delete-btn {
+              background: #ff4d4f;
+              border-color: #ff4d4f;
+
+              &:hover {
+                background: #ff7875;
+                border-color: #ff7875;
+              }
+
+              &:active {
+                background: #d9363e;
+                border-color: #d9363e;
+              }
+            }
+
+            .cancel-btn {
               &:hover {
                 border-color: #262626;
-              }
-              
-              .upload-icon {
-                font-size: 24px;
-                color: #999;
-                margin-top: 7px;
-                margin-bottom: 5px;
-                margin-left: 10px;
-
-              }
-              
-              .upload-text {
-                color: #666;
-                font-size: 14px;
-                margin-left: 10px;
-              }
-            }
-            
-            .ant-upload-list-picture-card-container {
-              width: 100%;
-              height: 120px;
-              
-              .ant-upload-list-item {
-                padding: 0;
-                border-radius: 6px;
+                color: #262626;
               }
             }
           }
@@ -472,112 +577,55 @@
       }
     }
 
-    .ant-modal-footer {
-      padding: 16px 24px;
-      border-top: 1px solid #f0f0f0;
-      
-      .ant-btn {
-        height: 36px;
-        padding: 0 16px;
-        font-size: 14px;
-        border-radius: 6px;
-        
-        &-primary {
-          background: #3e1e73;
-          
-          &:hover {
-            background: #3e1e73;
-          }
-        }
+    .dashboard-Headings {
+      font-size: 1.9rem;
+      font-weight: bold;
+      color: $secondary;
+      margin-bottom: 38px;
+    }
+
+    .client-link {
+      color: #002E63 !important;
+
+      &:hover {
+        color: #D90429 !important;
       }
     }
-  }
-  &.delete-modal {
-    .ant-modal-content {
-      .ant-modal-body {
-        padding: 32px 24px;
 
-        .delete-content {
-          text-align: center;
-          
-          .warning-icon {
-            font-size: 48px;
-            color: #ff4d4f;
-            margin-bottom: 16px;
-          }
-          
-          .delete-message {
-            font-size: 16px;
-            color: #262626;
-            margin-bottom: 8px;
-            
-            strong {
-              color: #262626;
-              font-weight: 600;
-            }
-          }
-          
-          .delete-warning {
-            font-size: 14px;
-            color: #8c8c8c;
-            margin-bottom: 0;
-          }
-        }
-      }
+    .ant-table-tbody .client-link {
+      color: #002E63 !important;
 
-      .ant-modal-footer {
-        .delete-btn {
-          background: #ff4d4f;
-          border-color: #ff4d4f;
-          
-          &:hover {
-            background: #ff7875;
-            border-color: #ff7875;
-          }
-          
-          &:active {
-            background: #d9363e;
-            border-color: #d9363e;
-          }
-        }
-        
-        .cancel-btn {
-          &:hover {
-            border-color: #262626;
-            color: #262626;
-          }
-        }
+      &:hover {
+        color: #D90429 !important;
       }
     }
-  }
-}
-.dashboard-Headings{
-  font-size: 1.9rem;
-  font-weight: bold;
-  color: $secondary;
-  margin-bottom: 38px;
-}
 
-.client-link {
-  color: #002E63 !important;
-  &:hover {
-    color: #D90429 !important;
-  }
-}
-.ant-table-tbody .client-link {
-  color: #002E63 !important;
-  &:hover {
-    color: #D90429 !important;
-  }
-}
-.ant-upload-list-item-name{
-  color: black;
-}
+    .ant-upload-list-item-name {
+      color: #002e63 !important;
 
-.table-description-cell {
-  white-space: pre-line;
-  word-break: break-word;
-  max-width: 420px;
-  line-height: 1.5;
-  /* Optionally add padding or font-size adjustments */
+      &:hover {
+        color: #d90429 !important;
+      }
+    }
+
+    .ant-table-tbody .client-link {
+      color: #002e63 !important;
+
+      &:hover {
+        color: #d90429 !important;
+      }
+    }
+
+    .ant-upload-list-item-name {
+      color: black;
+    }
+
+    .table-description-cell {
+      white-space: pre-line;
+      word-break: break-word;
+      max-width: 420px;
+      line-height: 1.5;
+      /* Optionally add padding or font-size adjustments */
+    }
+  }
 }
