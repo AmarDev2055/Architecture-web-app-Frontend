@@ -424,14 +424,11 @@ const ProjectSetting = () => {
       ) : (
         <div>
           <div
-            className="button-container"
             style={{
               marginBottom: "18px",
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
-              flexWrap: "wrap",
-              gap: "12px",
             }}
           >
             <Button
@@ -447,7 +444,7 @@ const ProjectSetting = () => {
               allowClear
               onSearch={handleSearch}
               onChange={(e) => handleSearch(e.target.value)}
-              style={{ width: "100%", maxWidth: 400 }}
+              style={{ width: 400 }}
             />
           </div>
 

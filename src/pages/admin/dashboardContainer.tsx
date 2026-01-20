@@ -14,7 +14,7 @@ import {
   CreditCardOutlined,
   AuditOutlined,
 } from "@ant-design/icons";
-import { Avatar, Dropdown, Layout, Menu, Drawer, Modal } from "antd";
+import { Avatar, Dropdown, Layout, Menu } from "antd";
 import { useEffect, useState } from "react";
 import { Link, Outlet, useNavigate, useLocation } from "react-router-dom";
 import Logo from "../../assets/images/ndbn-logo-white.png";
@@ -31,11 +31,6 @@ const items = [
     key: "testimonials",
     icon: <MessageOutlined />,
     label: "Testimonial Settings",
-  },
-  {
-    key: "teams",
-    icon: <TeamOutlined />,
-    label: "Team Settings", // Or "Teams"
   },
   {
     key: "Projects",
@@ -89,31 +84,12 @@ const items = [
 ];
 
 const DashboardContainer = () => {
-  const { Header, Content, Sider, Footer } = Layout;
+  const { Header, Content, Sider } = Layout;
   const location = useLocation();
   const navigate = useNavigate();
   const [collapsed, setCollapsed] = useState(false);
   const [selectedMenu, setSelectedMenu] = useState("banner");
   const [changePasswordVisible, setChangePasswordVisible] = useState(false);
-  const [logoutModalVisible, setLogoutModalVisible] = useState(false);
-  const [mobileDrawerVisible, setMobileDrawerVisible] = useState(false);
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
-
-  // Handle window resize for responsive behavior
-  useEffect(() => {
-    const handleResize = () => {
-      const mobile = window.innerWidth <= 768;
-      setIsMobile(mobile);
-      if (mobile) {
-        setCollapsed(true); // Auto-collapse on mobile
-      }
-    };
-
-    window.addEventListener("resize", handleResize);
-    handleResize(); // Initial check
-
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
 
   useEffect(() => {
     const pathSegments = location.pathname.split("/").filter(Boolean);
@@ -134,7 +110,6 @@ const DashboardContainer = () => {
   const handleMenuChange = (e: { key: string; keyPath: string[] }) => {
     const selectedKey = e.key;
     setSelectedMenu(selectedKey);
-    setMobileDrawerVisible(false); // Close mobile drawer on menu selection
     if (e.keyPath.includes("Projects")) {
       if (selectedKey === "projects-clients") {
         navigate(`/admin/${selectedKey}`);
@@ -152,11 +127,6 @@ const DashboardContainer = () => {
     e.preventDefault();
   };
 
-  const handleLogoutConfirm = () => {
-    setLogoutModalVisible(false);
-    handleSignOut(navigate);
-  };
-
   const menu = (
     <Menu>
       <Menu.Item onClick={() => setChangePasswordVisible(true)}>
@@ -165,7 +135,7 @@ const DashboardContainer = () => {
           <span>Change Password</span>
         </div>
       </Menu.Item>
-      <Menu.Item onClick={() => setLogoutModalVisible(true)}>
+      <Menu.Item onClick={() => handleSignOut(navigate)}>
         <div style={{ display: "flex", alignItems: "center" }}>
           <LogoutOutlined style={{ marginRight: "8px" }} />
           <span>Logout</span>
@@ -176,51 +146,19 @@ const DashboardContainer = () => {
 
   return (
     <Layout className="dashboard">
-      {/* Desktop Sider */}
-      {!isMobile && (
-        <Sider
-          width={250}
-          collapsible
-          collapsed={collapsed}
-          onCollapse={(value) => setCollapsed(value)}
-          trigger={null}
-          className="desktop-sider"
-        >
-          <Link
-            to="/"
-            className={`dashboard-logo ${collapsed ? "dashboard-logo-collapsed" : ""
-              }`}
-          >
-            <img src={Logo} alt="Logo" />
-          </Link>
-          <hr />
-          <Menu
-            theme="dark"
-            selectedKeys={[selectedMenu]}
-            mode="inline"
-            items={items}
-            onClick={handleMenuChange}
-            className="dashboard-menu ant-layout-sider"
-          />
-        </Sider>
-      )}
-
-      {/* Mobile Drawer - Same background as desktop sidebar */}
-      <Drawer
-        placement="left"
-        onClose={() => setMobileDrawerVisible(false)}
-        open={mobileDrawerVisible}
-        closable={false}
-        className="mobile-drawer"
+      <Sider
         width={250}
-        styles={{
-          body: {
-            padding: 0,
-            background: "#2b2b5a" // Same as desktop sidebar
-          }
-        }}
+        collapsible
+        collapsed={collapsed}
+        onCollapse={(value) => setCollapsed(value)}
+        trigger={null}
       >
-        <Link to="/" className="dashboard-logo">
+        <Link
+          to="/"
+          className={`dashboard-logo ${
+            collapsed ? "dashboard-logo-collapsed" : ""
+          }`}
+        >
           <img src={Logo} alt="Logo" />
         </Link>
         <hr />
@@ -232,8 +170,7 @@ const DashboardContainer = () => {
           onClick={handleMenuChange}
           className="dashboard-menu ant-layout-sider"
         />
-      </Drawer>
-
+      </Sider>
       <Layout>
         <Header style={{ padding: 0, background: "#fff" }}>
           <div
@@ -251,13 +188,7 @@ const DashboardContainer = () => {
                 marginRight: "auto",
                 cursor: "pointer",
               }}
-              onClick={() => {
-                if (isMobile) {
-                  setMobileDrawerVisible(!mobileDrawerVisible);
-                } else {
-                  setCollapsed(!collapsed);
-                }
-              }}
+              onClick={() => setCollapsed(!collapsed)}
             >
               {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
             </div>
@@ -282,25 +213,11 @@ const DashboardContainer = () => {
         <Content className="dashboard-content">
           <Outlet />
         </Content>
-        <Footer style={{ textAlign: "center", background: "#f0f2f5", padding: "16px 50px" }}>
-          © 2026 Nepal Designers and Builders. All rights reserved.
-        </Footer>
       </Layout>
       <EditProfile
         visible={changePasswordVisible}
         onCancel={() => setChangePasswordVisible(false)}
       />
-      <Modal
-        title="Confirm Logout"
-        open={logoutModalVisible}
-        onOk={handleLogoutConfirm}
-        onCancel={() => setLogoutModalVisible(false)}
-        okText="Logout"
-        cancelText="Cancel"
-        okButtonProps={{ danger: true }}
-      >
-        <p>Are you sure you want to logout?</p>
-      </Modal>
     </Layout>
   );
 };

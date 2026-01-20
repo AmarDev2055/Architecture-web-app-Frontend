@@ -10,7 +10,6 @@ import Projects from "../pages/client/projects";
 import DashboardContainer from "../pages/admin/dashboardContainer";
 import BannerSettings from "../pages/admin/Banner/Index";
 import TestimonialSetting from "../pages/admin/Testimonials/index";
-import TeamsSetting from "../pages/admin/Teams/index";
 import ProjectSetting from "../pages/admin/Projects/AddNewProjects/Index";
 import ProjectTypeSetting from "../pages/admin/Projects/ProjectTypes/Index";
 import ProjectClients from "../pages/admin/Projects/Clients/Index";
@@ -59,7 +58,6 @@ const RouteConfig = () => {
             <Route index element={<Navigate to="banner" replace />} />
             <Route path="banner" element={<BannerSettings />} />
             <Route path="testimonials" element={<TestimonialSetting />} />
-            <Route path="teams" element={<TeamsSetting />} />
             <Route
               path="projects-settings/:project_id"
               element={<ProjectSetting />}

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { Space, Table, Button, message, Tooltip, Card } from "antd";
+import { Space, Table, Button, message, Tooltip } from "antd";
 import {
   EditOutlined,
   DeleteOutlined,
@@ -206,48 +206,43 @@ const ProjectCategorySetting = () => {
       {pageLoading ? (
         <LoadingSpinner />
       ) : (
-        <>
-          <Card bordered={false} style={{ boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.03), 0 1px 6px -1px rgba(0, 0, 0, 0.02), 0 2px 4px 0 rgba(0, 0, 0, 0.02)' }}>
-            <div
-              className="button-container"
-              style={{
-                marginBottom: "16px",
-                display: "flex",
-                justifyContent: "space-between",
-                flexWrap: "wrap",
-                gap: "12px",
-              }}
+        <div>
+          <div
+            style={{
+              marginBottom: "16px",
+              display: "flex",
+              justifyContent: "space-between",
+            }}
+          >
+            <Button
+              type="primary"
+              icon={<PlusOutlined />}
+              onClick={() => setModalVisible(true)}
+              className="create-btn"
             >
-              <Button
-                type="primary"
-                icon={<PlusOutlined />}
-                onClick={() => setModalVisible(true)}
-                className="create-btn"
-              >
-                Create
-              </Button>
-            </div>
+              Create
+            </Button>
+          </div>
 
-            <Table<DataType>
-              columns={columns}
-              dataSource={[...data].sort((a, b) => a.id - b.id)}
-              pagination={{
-                current: pagination.current,
-                pageSize: pagination.pageSize,
-                pageSizeOptions: ["10", "20", "50", "100"],
-                showSizeChanger: false,
-                // position: ['bottomLeft'],
-              }}
-              onChange={(pagination) => {
-                setPagination({
-                  current: pagination.current || 1,
-                  pageSize: pagination.pageSize || 10,
-                });
-              }}
-              scroll={{ x: "max-content" }}
-              rowKey="id"
-            />
-          </Card>
+          <Table<DataType>
+            columns={columns}
+            dataSource={[...data].sort((a, b) => a.id - b.id)}
+            pagination={{
+              current: pagination.current,
+              pageSize: pagination.pageSize,
+              pageSizeOptions: ["10", "20", "50", "100"],
+              showSizeChanger: false,
+              // position: ['bottomLeft'],
+            }}
+            onChange={(pagination) => {
+              setPagination({
+                current: pagination.current || 1,
+                pageSize: pagination.pageSize || 10,
+              });
+            }}
+            scroll={{ x: "max-content" }}
+            rowKey="id"
+          />
 
           <CreateModal
             visible={modalVisible}
@@ -273,7 +268,7 @@ const ProjectCategorySetting = () => {
             onConfirm={handleDeleteConfirm}
             recordName={editingRecord?.category || ""}
           />
-        </>
+        </div>
       )}
     </div>
   );

@@ -5,7 +5,6 @@ import InnerHeader from "../../../components/client/InnerHeader";
 import axios from "axios";
 import { apiUrl } from "../../../utils";
 import ScrollToTop from "../../../components/client/ScrollToTop";
-import "./projects_new.css";
 
 interface ProjectTypes {
   key: string;
@@ -46,7 +45,6 @@ const Projects = () => {
   const [projectTypes, setProjectTypes] = useState<ProjectTypes[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>("");
   const [clients, setClients] = useState<Client[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   const fetchProjectTypes = async () => {
@@ -73,7 +71,6 @@ const Projects = () => {
   };
 
   const fetchClients = async (id: string) => {
-    setIsLoading(true);
     try {
       const response = await axios.get(
         `${apiUrl}/architecture-web-app/projects/get-clients/${id}`
@@ -81,16 +78,14 @@ const Projects = () => {
       setClients(response.data.data);
     } catch (error) {
       console.error("Error fetching clients:", error);
-    } finally {
-      setIsLoading(false);
     }
   };
 
-  const encodeId = (id: number) => btoa(id.toString());
+  const encodeId = (id: number) => btoa(id.toString()); // Base64 encode
 
   const handleClientClick = (clientId: number) => {
     const encodedId = encodeId(clientId);
-    navigate(`/projects/${encodedId}`);
+    navigate(`/projects/${encodedId}`); // e.g. /projects/MTQ=
   };
 
   const handleCategoryClick = (key: string) => {
@@ -111,44 +106,44 @@ const Projects = () => {
   return (
     <>
       <InnerHeader title="PROJECTS" currentPage="PROJECTS" />
-      <section className="project-section">
-        <div className="project-container">
-          {/* Category Filter */}
-          <div className="filter-wrapper">
-            <div className="filter-bar">
+      <section className="project-area" id="project">
+        <div className="container">
+          <motion.div
+            className="section-title"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+          ></motion.div>
+
+          <div className="project-layout">
+            {/* Sidebar */}
+            <motion.div
+              className="sidebar"
+              initial={{ opacity: 0, x: -50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5 }}
+            >
               {projectTypes.map((projectType) => (
-                <button
+                <motion.button
                   key={projectType.key}
                   onClick={() => handleCategoryClick(projectType.key)}
-                  className={`filter-btn ${
+                  className={`sidebar-btn ${
                     selectedCategory === projectType.key ? "active" : ""
                   }`}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  transition={{ duration: 0.2 }}
                 >
                   {projectType.title}
-                </button>
+                </motion.button>
               ))}
-            </div>
-          </div>
+            </motion.div>
 
-          {/* Loading State */}
-          {isLoading && (
-            <div className="loading-state">
-              <div className="loader"></div>
-            </div>
-          )}
-
-          {/* Projects Grid */}
-          <AnimatePresence mode="wait">
-            {!isLoading && (
-              <motion.div
-                className="projects-grid"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.3 }}
-              >
+            {/* Client List */}
+            <div className="client-list">
+              <AnimatePresence>
                 {clients.length > 0 ? (
-                  clients.map((client, index) => {
+                  clients.map((client) => {
                     const featureImage = client.project?.media?.find(
                       (media) => media.image_type === "feature"
                     );
@@ -158,65 +153,53 @@ const Projects = () => {
                       : "";
 
                     return (
-                      <motion.article
+                      <motion.div
                         key={client.id}
-                        className="project-card"
+                        className="client-item"
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.4, delay: index * 0.05 }}
-                        onClick={() => handleClientClick(client.id)}
+                        exit={{ opacity: 0, y: 20 }}
+                        transition={{ duration: 0.4 }}
                       >
                         {featureImage && (
-                          <>
-                            <div className="project-image">
-                              <img
-                                src={fullImagePath}
-                                alt={client.project.name}
-                                loading="lazy"
-                              />
-                              <div className="image-overlay">
-                                <span className="view-label">View Details</span>
-                              </div>
-                            </div>
-                            <div className="project-info">
-                              <h3 className="project-title">
-                                {client.project.name}
-                              </h3>
-                              <p className="project-client">
-                                {client.fullName}
-                              </p>
-                              <p className="project-location">
-                                {client.address}
-                              </p>
-                            </div>
-                          </>
+                          <div className="image-wrapper">
+                            <motion.img
+                              src={fullImagePath}
+                              alt={client.fullName}
+                              sizes="(max-width: 479px) 100vw, (max-width: 767px) 96vw, (max-width: 991px) 45vw, 37vw"
+                              whileHover={{ scale: 1.03 }}
+                              transition={{ duration: 0.3 }}
+                              loading="lazy"
+                            />
+                            <motion.div
+                              onClick={() => handleClientClick(client.id)}
+                              className="image-overlay"
+                              initial={{ opacity: 0 }}
+                              whileHover={{ opacity: 1 }}
+                              transition={{ duration: 0.3 }}
+                            >
+                              <h3>{client.fullName}</h3>
+                              <h3>{client.project.name}</h3>
+                              <p>{client.address}</p>
+                            </motion.div>
+                          </div>
                         )}
-                      </motion.article>
+                      </motion.div>
                     );
                   })
                 ) : (
-                  <div className="empty-state">
-                    <div className="no-projects-icon">
-                      <svg
-                        width="64"
-                        height="64"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="1.5"
-                      >
-                        <rect x="3" y="3" width="7" height="7" />
-                        <rect x="14" y="3" width="7" height="7" />
-                        <rect x="14" y="14" width="7" height="7" />
-                        <rect x="3" y="14" width="7" height="7" />
-                      </svg>
-                    </div>
-                    <p>No projects found in this category</p>
-                  </div>
+                  <motion.p
+                    className="no-projects-message"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.5 }}
+                  >
+                    No projects available in this category.
+                  </motion.p>
                 )}
-              </motion.div>
-            )}
-          </AnimatePresence>
+              </AnimatePresence>
+            </div>
+          </div>
         </div>
         <ScrollToTop />
       </section>
