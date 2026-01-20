@@ -48,13 +48,13 @@ interface ClientFormData {
 const ClientFormSetting = () => {
   const [refreshKey, setRefreshKey] = useState(0);
   const { data, loading, error } = useGetAPI<ClientFormData[]>(
-    `architecture-web-app/forms?refresh=${refreshKey}`
+    `architecture-web-app/forms?refresh=${refreshKey}`,
   );
 
   const [editModalVisible, setEditModalVisible] = useState<boolean>(false);
   const [deleteModalVisible, setDeleteModalVisible] = useState<boolean>(false);
   const [editingRecord, setEditingRecord] = useState<ClientFormData | null>(
-    null
+    null,
   );
   const [recordName, setRecordName] = useState<string>("");
   const [pageLoading, setPageLoading] = useState<boolean>(false);
@@ -90,7 +90,7 @@ const ClientFormSetting = () => {
         data.length
       }`,
       14,
-      32
+      32,
     );
 
     // Main Table
@@ -184,7 +184,7 @@ const ClientFormSetting = () => {
         18: { cellWidth: 36 }, // Room Requirements
       },
       margin: { top: 42, left: 12, right: 12, bottom: 25 },
-      didDrawPage: (data) => {
+      didDrawPage: () => {
         // Page number footer
         doc.setFontSize(9);
         doc.setTextColor(120);
@@ -193,13 +193,13 @@ const ClientFormSetting = () => {
             doc.getCurrentPageInfo().pageNumber
           } of ${doc.getNumberOfPages()}`,
           doc.internal.pageSize.width - 30,
-          doc.internal.pageSize.height - 10
+          doc.internal.pageSize.height - 10,
         );
       },
     });
 
     doc.save(
-      `Client_Requirement_Forms_${new Date().toISOString().slice(0, 10)}.pdf`
+      `Client_Requirement_Forms_${new Date().toISOString().slice(0, 10)}.pdf`,
     );
   };
 
@@ -212,7 +212,7 @@ const ClientFormSetting = () => {
         {
           withCredentials: true,
           headers: { "Content-Type": "application/json" },
-        }
+        },
       );
       message.success("Client form updated successfully!");
       setEditModalVisible(false);
@@ -237,7 +237,7 @@ const ClientFormSetting = () => {
         `${apiUrl}/architecture-web-app/forms/${editingRecord?.id}`,
         {
           withCredentials: true,
-        }
+        },
       );
       message.success(`${editingRecord?.fullName} has been deleted`);
       setDeleteModalVisible(false);

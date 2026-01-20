@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import axios from "axios";
 import { apiUrl } from "../../utils";
@@ -20,14 +20,14 @@ const ProjectsSection = () => {
       try {
         const response = await axios.get(
           `${apiUrl}/architecture-web-app/projects/get-latest-projects`,
-          { withCredentials: true }
+          { withCredentials: true },
         );
 
         const projectData = response.data.data
           .filter((project: any) => project.status === true)
           .sort(
             (a: any, b: any) =>
-              new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+              new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
           )
           .slice(0, 6)
           .map((project: any) => {
