@@ -1,13 +1,25 @@
 import { useState, useEffect } from "react";
 import { Table, message, Button, Space, Tooltip } from "antd";
-import { EditOutlined, DeleteOutlined } from "@ant-design/icons"; //PlusOutlined
+import {
+  EditOutlined,
+  DeleteOutlined,
+  DownloadOutlined,
+} from "@ant-design/icons";
 import useGetAPI from "../../../../hooks/useGetAPI";
-// import usePostAPI from "../../../hooks/usePostAPI"; // Assuming you have this from previous interactions
 import axios from "axios";
 import { apiUrl } from "../../../../utils";
 import LoadingSpinner from "../../../../components/client/LoadingSpinner";
 import UpdateModal from "./UpdateModal";
 import DeleteModal from "./DeleteModal";
+import jsPDF from "jspdf";
+import autoTable from "jspdf-autotable"; // Make sure this is imported
+
+// Extend jsPDF type for TypeScript (autoTable)
+declare module "jspdf" {
+  interface jsPDF {
+    autoTable: (options: any) => jsPDF;
+  }
+}
 
 interface ClientFormData {
   id: string;
@@ -36,14 +48,13 @@ interface ClientFormData {
 const ClientFormSetting = () => {
   const [refreshKey, setRefreshKey] = useState(0);
   const { data, loading, error } = useGetAPI<ClientFormData[]>(
-    `architecture-web-app/forms?refresh=${refreshKey}`
+    `architecture-web-app/forms?refresh=${refreshKey}`,
   );
-  // const { postData } = usePostAPI("/architecture-web-app/forms");
-  // const [modalVisible, setModalVisible] = useState<boolean>(false);
+
   const [editModalVisible, setEditModalVisible] = useState<boolean>(false);
   const [deleteModalVisible, setDeleteModalVisible] = useState<boolean>(false);
   const [editingRecord, setEditingRecord] = useState<ClientFormData | null>(
-    null
+    null,
   );
   const [recordName, setRecordName] = useState<string>("");
   const [pageLoading, setPageLoading] = useState<boolean>(false);
@@ -54,18 +65,143 @@ const ClientFormSetting = () => {
     }
   }, [error]);
 
-  // const handleCreate = async (values: any) => {
-  //   setPageLoading(true);
-  //   try {
-  //     await postData(values);
-  //     message.success("Client form created successfully!");
-  //     setModalVisible(false);
-  //   } catch (err) {
-  //     message.error("Failed to create client form");
-  //   } finally {
-  //     setPageLoading(false);
-  //   }
-  // };
+  // ── PDF Download Handler ───────────────────────────────────────────────
+  const handleDownloadPDF = () => {
+    if (!data || data.length === 0) {
+      message.warning("No data available to download");
+      return;
+    }
+
+    const doc = new jsPDF({
+      orientation: "landscape", // Landscape because there are many columns
+      unit: "mm",
+      format: "a3", // Changed to A3 for better fit with many columns
+    });
+
+    // Title & Metadata
+    doc.setFontSize(20);
+    doc.setTextColor(38, 34, 98); // #262262
+    doc.text("Client Requirement Forms", 14, 22);
+
+    doc.setFontSize(11);
+    doc.setTextColor(80);
+    doc.text(
+      `Generated on: ${new Date().toLocaleDateString()} • Total Records: ${
+        data.length
+      }`,
+      14,
+      32,
+    );
+
+    // Main Table
+    autoTable(doc, {
+      startY: 42,
+      head: [
+        [
+          "SN",
+          "Full Name",
+          "Mobile",
+          "Type of Building",
+          "Location of Site",
+          "Email",
+          "Site Area",
+          "Project Duration",
+          "Access Road Width",
+          "Topography",
+          "Site Orientation",
+          "By Laws",
+          "FAR",
+          "GCR",
+          "Setback",
+          "Requirements",
+          "No. of Floors",
+          "Basement/Parking",
+          "Room Requirements",
+        ],
+      ],
+      body: data.map((item, index) => [
+        index + 1,
+        item.fullName || "-",
+        item.mobile || "-",
+        item.type_of_building || "-",
+        item.site_location || "-",
+        item.email || "-",
+        item.site_area || "-",
+        item.project_duration || "-",
+        item.access_road_width || "-",
+        item.topography || "-",
+        // Combining both orientation fields
+        [
+          item.site_orientation_details || "",
+          Array.isArray(item.site_orientation)
+            ? item.site_orientation.join(", ")
+            : "",
+        ]
+          .filter(Boolean)
+          .join(" | ") || "-",
+        item.FAR || "-",
+        item.GCR || "-",
+        item.setback || "-",
+        item.no_of_floor ?? "-",
+        item.parking_area || "-",
+        item.room_requirements || "-",
+      ]),
+      styles: {
+        fontSize: 8.5,
+        cellPadding: 3,
+        overflow: "linebreak",
+        lineWidth: 0.1,
+        lineColor: [200, 200, 200],
+      },
+      headStyles: {
+        fillColor: [38, 34, 98],
+        textColor: [255, 255, 255],
+        fontStyle: "bold",
+        halign: "center",
+      },
+      alternateRowStyles: {
+        fillColor: [248, 248, 255],
+      },
+      columnStyles: {
+        0: { cellWidth: 10 }, // SN
+        1: { cellWidth: 30 }, // Full Name
+        2: { cellWidth: 22 }, // Mobile
+        3: { cellWidth: 28 }, // Type of Building
+        4: { cellWidth: 32 }, // Location of Site
+        5: { cellWidth: 38 }, // Email
+        6: { cellWidth: 22 }, // Site Area
+        7: { cellWidth: 24 }, // Project Duration
+        8: { cellWidth: 24 }, // Access Road Width
+        9: { cellWidth: 24 }, // Topography
+        10: { cellWidth: 32 }, // Site Orientation
+        11: { cellWidth: 22 }, // By Laws
+        12: { cellWidth: 16 }, // FAR
+        13: { cellWidth: 16 }, // GCR
+        14: { cellWidth: 20 }, // Setback
+        15: { cellWidth: 32 }, // Requirements
+        16: { cellWidth: 18 }, // No. of Floors
+        17: { cellWidth: 26 }, // Basement/Parking
+        18: { cellWidth: 36 }, // Room Requirements
+      },
+      margin: { top: 42, left: 12, right: 12, bottom: 25 },
+      didDrawPage: () => {
+        // Page number footer
+        doc.setFontSize(9);
+        doc.setTextColor(120);
+        doc.text(
+          `Page ${
+            doc.getCurrentPageInfo().pageNumber
+          } of ${doc.getNumberOfPages()}`,
+          doc.internal.pageSize.width - 30,
+          doc.internal.pageSize.height - 10,
+        );
+      },
+    });
+
+    doc.save(
+      `Client_Requirement_Forms_${new Date().toISOString().slice(0, 10)}.pdf`,
+    );
+  };
 
   const handleUpdate = async (values: any) => {
     setPageLoading(true);
@@ -76,7 +212,7 @@ const ClientFormSetting = () => {
         {
           withCredentials: true,
           headers: { "Content-Type": "application/json" },
-        }
+        },
       );
       message.success("Client form updated successfully!");
       setEditModalVisible(false);
@@ -101,7 +237,7 @@ const ClientFormSetting = () => {
         `${apiUrl}/architecture-web-app/forms/${editingRecord?.id}`,
         {
           withCredentials: true,
-        }
+        },
       );
       message.success(`${editingRecord?.fullName} has been deleted`);
       setDeleteModalVisible(false);
@@ -180,7 +316,27 @@ const ClientFormSetting = () => {
         <LoadingSpinner />
       ) : (
         <div>
-          <div className="dashboard-Headings">Client Requirement Form</div>
+          <div
+            style={{
+              marginBottom: 16,
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              flexWrap: "wrap",
+              gap: 16,
+            }}
+          >
+            <div className="dashboard-Headings">Client Requirement Form</div>
+            <Button
+              type="primary"
+              icon={<DownloadOutlined />}
+              onClick={handleDownloadPDF}
+              disabled={!data || data.length === 0 || loading}
+            >
+              Download as PDF
+            </Button>
+          </div>
+
           <Table<ClientFormData>
             columns={columns}
             dataSource={
@@ -190,6 +346,7 @@ const ClientFormSetting = () => {
             scroll={{ x: "max-content" }}
             rowKey="id"
           />
+
           {editingRecord && (
             <UpdateModal
               visible={editModalVisible}
@@ -198,6 +355,7 @@ const ClientFormSetting = () => {
               initialValues={editingRecord}
             />
           )}
+
           <DeleteModal
             visible={deleteModalVisible}
             onCancel={() => setDeleteModalVisible(false)}

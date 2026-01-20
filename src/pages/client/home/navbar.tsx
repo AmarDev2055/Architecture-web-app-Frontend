@@ -52,7 +52,7 @@ const NavbarComponent: React.FC = () => {
                 <MailOutlined /> contact@ndnb.com.np
               </a>
               <span>
-                <EnvironmentOutlined /> Kalanki, Kathmandu
+                <EnvironmentOutlined /> Samakhusi-26, Kathmandu
               </span>
             </div>
             <div className="social-links">
