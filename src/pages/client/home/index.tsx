@@ -11,6 +11,8 @@ import WhyUs from "../../../components/client/WhyUs.tsx";
 import LoadingSpinner from "../../../components/client/LoadingSpinner";
 import useGetAPI from "../../../hooks/useGetAPI";
 import TrustedClientsSection from "../../../components/client/TrustedClients.tsx";
+import AssociationSection from "../../../components/client/AssociationSection.tsx";
+// import "../../../styles/_typography.scss";
 
 interface BannerData {
   id: number;
@@ -45,9 +47,7 @@ const Home = () => {
       <Layout>
         <WhyUs />
       </Layout>
-      <Layout>
-        <TrustedClientsSection />
-      </Layout>
+
       <Layout>
         <ProjectsSection />
       </Layout>
@@ -55,7 +55,13 @@ const Home = () => {
         <TestimonialSlider />
       </Layout>
       <Layout>
+        <TrustedClientsSection />
+      </Layout>
+      <Layout>
         <ContactUsSection />
+      </Layout>
+      <Layout>
+        <AssociationSection />
       </Layout>
       <ScrollToTop />
     </>

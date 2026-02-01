@@ -185,6 +185,7 @@ const Footer = () => {
             </div>
           </div>
         </div>
+
         <div className="footer-copyright">
           <div className="footer-copyright-wrapper">
             <p className="footer-copyright-text">
