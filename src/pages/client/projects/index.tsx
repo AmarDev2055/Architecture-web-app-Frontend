@@ -52,7 +52,7 @@ const Projects = () => {
   const fetchProjectTypes = async () => {
     try {
       const response = await axios.get(
-        `${apiUrl}/architecture-web-app/projects/project-types/`
+        `${apiUrl}/architecture-web-app/projects/active-project-types/`
       );
 
       const fetchedData = response.data.data
