@@ -69,7 +69,7 @@ const ProjectsSection = () => {
             (a: any, b: any) =>
               new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
           )
-          .slice(0, 6)
+          .slice(0, 4)
           .map((project: any) => {
             return {
               id: project.id,
@@ -176,14 +176,20 @@ const ProjectsSection = () => {
 
         .projects-grid-pro {
           display: grid;
-          grid-template-columns: repeat(3, 1fr);  /* Changed from auto-fit to fixed 3 columns */
-          gap: 40px;
+          grid-template-columns: repeat(4, 1fr);  /* Changed to 4 columns */
+          gap: 20px;  /* Reduced gap for more compact layout */
           margin-bottom: 80px;
           position: relative;
           z-index: 2;
         }
 
-        @media (max-width: 1024px) {  /* Added tablet breakpoint */
+        @media (max-width: 1200px) {  /* Added breakpoint for 3 columns */
+          .projects-grid-pro {
+            grid-template-columns: repeat(3, 1fr);
+          }
+        }
+
+        @media (max-width: 1024px) {  /* Tablet breakpoint for 2 columns */
           .projects-grid-pro {
             grid-template-columns: repeat(2, 1fr);
           }
@@ -197,7 +203,7 @@ const ProjectsSection = () => {
 
         .project-card-pro {
           position: relative;
-          height: 550px;
+          height: 400px;  /* Reduced from 550px */
           overflow: hidden;
           cursor: pointer;
           background: #111;
@@ -264,7 +270,7 @@ const ProjectsSection = () => {
           bottom: 0;
           left: 0;
           right: 0;
-          padding: 40px;
+          padding: 30px;  /* Reduced from 40px */
           z-index: 3;
           transform: translateY(20px);
           transition: transform 0.6s cubic-bezier(0.19, 1, 0.22, 1);
@@ -285,21 +291,21 @@ const ProjectsSection = () => {
         }
 
        .project-title-pro {
-        font-size: 32px;
+        font-size: 24px;  /* Reduced from 32px */
         font-weight: 300;
         line-height: 1.25;
         font-variant: all-small-caps;
-        margin: 0 0 1px 0; /* reduced */
+        margin: 0 0 1px 0;
         letter-spacing: -0.5px;
         color: #fff;
       }
 
     .project-location-pro {
-      font-size: 16px;
+      font-size: 14px;  /* Reduced from 16px */
       font-weight: 100;
       font-variant: all-small-caps;
       letter-spacing: -0.5px;
-      margin: 0 5px 0 0; /* remove default h4 margin */
+      margin: 0 5px 0 0;
       color: #fff;
     }
 
@@ -310,7 +316,7 @@ const ProjectsSection = () => {
           gap: 10px;
           color: #fff;
           text-decoration: none;
-          font-size: 14px;
+          font-size: 12px;  /* Reduced from 14px */
           letter-spacing: 2px;
           text-transform: uppercase;
           opacity: 0;
@@ -333,9 +339,9 @@ const ProjectsSection = () => {
 
         .project-number-pro {
           position: absolute;
-          top: 30px;
-          right: 30px;
-          font-size: 80px;
+          top: 20px;  /* Reduced from 30px */
+          right: 20px;  /* Reduced from 30px */
+          font-size: 60px;  /* Reduced from 80px */
           font-weight: 100;
           z-index: 3;
           line-height: 1;
@@ -347,15 +353,15 @@ const ProjectsSection = () => {
 
         .project-date-top {
           position: absolute;
-          top: 30px;
-          left: 30px;
-          font-size: 14px;
+          top: 20px;  /* Reduced from 30px */
+          left: 20px;  /* Reduced from 30px */
+          font-size: 12px;  /* Reduced from 14px */
           font-weight: 400;
           z-index: 4;
           line-height: 1;
           color: #fff;
           background: rgba(0, 0, 0, 0.7);
-          padding: 10px 20px;
+          padding: 8px 16px;  /* Reduced from 10px 20px */
           letter-spacing: 2px;
           text-transform: uppercase;
           backdrop-filter: blur(10px);
