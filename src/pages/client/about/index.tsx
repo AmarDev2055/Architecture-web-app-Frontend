@@ -29,7 +29,9 @@ const AboutUsPage = () => {
   useEffect(() => {
     const fetchTeamMembers = async () => {
       try {
-        const response = await axios.get(`${apiUrl}/architecture-web-app/team-members/featured`);
+        const response = await axios.get(
+          `${apiUrl}/architecture-web-app/team-members/featured`,
+        );
         if (response.data && response.data.data) {
           const members: TeamMember[] = response.data.data;
           const sortedMembers = members.sort((a, b) => a.order - b.order);
@@ -233,11 +235,15 @@ const AboutUsPage = () => {
                     >
                       <div className="team-image-container">
                         <img
-                          src={member.filepath ? `${apiUrl}/architecture-web-app${member.filepath}` : ""}
+                          src={
+                            member.filepath
+                              ? `${apiUrl}/architecture-web-app${member.filepath}`
+                              : ""
+                          }
                           alt={member.name}
                           className="team-image"
                           onError={(
-                            e: React.SyntheticEvent<HTMLImageElement>
+                            e: React.SyntheticEvent<HTMLImageElement>,
                           ) => {
                             const target = e.target as HTMLImageElement;
                             target.src =
@@ -249,7 +255,9 @@ const AboutUsPage = () => {
                         <Title level={4} className="team-name">
                           {member.name}
                         </Title>
-                        <div className="team-position">{member.designation}</div>
+                        <div className="team-position">
+                          {member.designation}
+                        </div>
                         {member.additionalInfo && (
                           <p className="education-secondary">
                             {member.additionalInfo}
@@ -300,7 +308,7 @@ const AboutUsPage = () => {
 
                 <Paragraph className="contact-intro">
                   Got a question or need help with your project? Contact us from
-                  any medium +977-9851356590/ +977- 9851340040 anytime! <br />
+                  any medium +01-5926740 / +977-9701364188 anytime! <br />
                   We’ll get back to you soon.
                   <br />
                   We’re here to make your dream project a reality!
@@ -386,14 +394,14 @@ const AboutUsPage = () => {
             <Col xs={24} lg={12}>
               <div className="map-container">
                 <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3532.8407931243287!2d85.27923357547357!3d27.691315126198393!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb19eda9890b29%3A0x414c20f681475f25!2sNepal%20Designers%20and%20Builders!5e0!3m2!1sne!2snp!4v1733824629346!5m2!1sne!2snp"
+                  src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d220.72649644255276!2d85.3146202!3d27.728895!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8c9ac7b0fcfa4e5d%3A0x70031c2fed208c2c!2sGhar%20Plot%20Nepal!5e0!3m2!1sen!2sqa!4v1770302573915!5m2!1sen!2sqa"
                   width="100%"
                   height="100%"
                   style={{ border: 0 }}
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
                   title="Our Location"
-                />
+                ></iframe>
               </div>
             </Col>
           </Row>

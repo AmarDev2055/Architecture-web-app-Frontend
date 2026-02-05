@@ -28,7 +28,6 @@
   }
 
   .dashboard-menu {
-
     // Main menu items
     .ant-menu-item {
       &:hover {
@@ -52,7 +51,6 @@
 
     // Submenu styles
     .ant-menu-submenu {
-
       // Submenu title (Projects)
       .ant-menu-submenu-title {
         &:hover {
@@ -241,10 +239,10 @@
   }
 
   // Table header styling
-  .ant-table-thead>tr>th {
+  .ant-table-thead > tr > th {
     color: #7b7979 !important;
     text-transform: uppercase;
-    font-weight:200;
+    font-weight: 200;
     font-size: 13px;
     // background-color: #878787 !important;
     // border: 0.5px solid #e8e8e8 !important;
@@ -597,20 +595,26 @@
   /* Optionally add padding or font-size adjustments */
 }
 
+// Force background for Ant Design Menu + Sider
+:where(
+    .css-1lmeb6g
+  ).ant-menu.ant-menu-root.ant-menu-inline.ant-menu-dark.dashboard-menu {
+  background: #2b2b5a !important;
+}
 
+// Also force Sider background
+:where(.css-1lmeb6g).ant-layout-sider {
+  background: #2b2b5a !important;
+}
 
+// Fallback (if hash changes)
+.ant-menu-dark.dashboard-menu {
+  background: #2b2b5a !important;
+}
 
-
-
-
-
-
-
-
-
-
-
-
+.ant-layout-sider {
+  background: #2b2b5a !important;
+}
 
 // @use "../base/variable" as *;
 
@@ -984,7 +988,7 @@
 //   height: 45px;
 // }
 
-// // :where(.css-dev-only-do-not-override-1lmeb6g).ant-input-search 
+// // :where(.css-dev-only-do-not-override-1lmeb6g).ant-input-search
 // .ant-input-search .ant-input-search-button {
 //   height: 45px;
 //   width: 50px;

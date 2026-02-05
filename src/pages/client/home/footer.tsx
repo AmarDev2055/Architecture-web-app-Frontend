@@ -61,7 +61,7 @@ const Footer = () => {
                       style={{ color: "#b64141" }}
                     />
                     <a
-                      href="https://maps.app.goo.gl/Qkxq4Mdjqu4XL6mv6"
+                      href="https://maps.app.goo.gl/LN6fCUCPy35TP9T7A"
                       target="_blank"
                       rel="noopener noreferrer"
                     >
@@ -79,7 +79,13 @@ const Footer = () => {
                       icon={faLocationDot}
                       style={{ color: "#b64141" }}
                     />
-                    Jhapa, Birtamod
+                    <a
+                      href="https://maps.app.goo.gl/jpNi19cYnmC7ADdWA"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Jhapa, Birtamod
+                    </a>
                   </div>
                 </li>
               </ul>
@@ -161,25 +167,25 @@ const Footer = () => {
               <p className="footer-call-to-action-link-wrapper">
                 <a
                   className="footer-call-to-action-link"
-                  href="tel:+977-9851340040"
+                  href="tel:+977-9701364188"
                   target="_self"
                 >
                   <FontAwesomeIcon
                     icon={faPhone}
                     style={{ color: "#b64141" }}
                   />{" "}
-                  +977-9851340040
+                  +977-9701364188
                 </a>
                 <a
                   className="footer-call-to-action-link"
-                  href="mailto:contact@ndnb.com.np"
+                  href="mailto:ndb.officials.ndb@gmail.com"
                   target="_self"
                 >
                   <FontAwesomeIcon
                     icon={faEnvelope}
                     style={{ color: "#b64141" }}
                   />{" "}
-                  contact@ndnb.com.np
+                  ndb.officials.ndb@gmail.com
                 </a>
               </p>
             </div>
