@@ -49,8 +49,8 @@ const NavbarComponent: React.FC = () => {
                 <WhatsAppOutlined />
                 +977-9701364188
               </a>
-              <a href="mailto:ndb.officials.ndb@gmail.com">
-                <MailOutlined /> ndb.officials.ndb@gmail.com
+              <a href="mailto:contact@ndnb.com.np">
+                <MailOutlined /> contact@ndnb.com.np
               </a>
               <span>
                 <EnvironmentOutlined /> Samakhusi-26, Kathmandu

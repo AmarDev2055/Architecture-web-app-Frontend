@@ -492,7 +492,7 @@ const ProjectsSection = () => {
                   className="project-card-pro"
                 >
                   <span className="project-date-top">{project.date}</span>
-                  <span className="project-number-pro">0{index + 1}</span>
+                  {/* <span className="project-number-pro">0{index + 1}</span> */}
                   <img
                     src={project.bgImage}
                     alt={project.title}

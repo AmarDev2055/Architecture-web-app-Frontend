@@ -38,6 +38,7 @@ const Footer = () => {
             </div>
 
             <div className="footer-menu">
+              {/* <h4>“नेपालभर नक्सादेखि निर्माणसम्म”</h4> */}
               <h4 className="footer-breif">
                 We don't only build structure, we build trust and shape your
                 future, join us we definitely add value to your goal.
@@ -178,14 +179,14 @@ const Footer = () => {
                 </a>
                 <a
                   className="footer-call-to-action-link"
-                  href="mailto:ndb.officials.ndb@gmail.com"
+                  href="mailto:contact@ndnb.com.np"
                   target="_self"
                 >
                   <FontAwesomeIcon
                     icon={faEnvelope}
                     style={{ color: "#b64141" }}
                   />{" "}
-                  ndb.officials.ndb@gmail.com
+                  contact@ndnb.com.np
                 </a>
               </p>
             </div>
