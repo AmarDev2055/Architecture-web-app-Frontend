@@ -41,15 +41,16 @@ const NavbarComponent: React.FC = () => {
         <div className="container">
           <div className="top-bar-content">
             <div className="contact-info">
-              <a href="tel:+01 12345567890">
-                <FaPhoneAlt /> +977-9851340040
+              <a href="tel:+015926740">
+                <FaPhoneAlt />
+                +01-5926740
               </a>
-              <a href="tel:+01 12345567890">
+              <a href="https://wa.me/9779701364188" target="_blank">
                 <WhatsAppOutlined />
-                9851356590
+                +977-9701364188
               </a>
-              <a href="mailto:demo@gmail.com">
-                <MailOutlined /> contact@ndnb.com.np
+              <a href="mailto:ndb.officials.ndb@gmail.com">
+                <MailOutlined /> ndb.officials.ndb@gmail.com
               </a>
               <span>
                 <EnvironmentOutlined /> Samakhusi-26, Kathmandu

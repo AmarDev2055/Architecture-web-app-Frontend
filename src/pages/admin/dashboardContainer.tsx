@@ -188,8 +188,9 @@ const DashboardContainer = () => {
         >
           <Link
             to="/"
-            className={`dashboard-logo ${collapsed ? "dashboard-logo-collapsed" : ""
-              }`}
+            className={`dashboard-logo ${
+              collapsed ? "dashboard-logo-collapsed" : ""
+            }`}
           >
             <img src={Logo} alt="Logo" />
           </Link>
@@ -216,8 +217,8 @@ const DashboardContainer = () => {
         styles={{
           body: {
             padding: 0,
-            background: "#2b2b5a" // Same as desktop sidebar
-          }
+            background: "#2b2b5a", // Same as desktop sidebar
+          },
         }}
       >
         <Link to="/" className="dashboard-logo">
@@ -282,7 +283,13 @@ const DashboardContainer = () => {
         <Content className="dashboard-content">
           <Outlet />
         </Content>
-        <Footer style={{ textAlign: "center", background: "#f0f2f5", padding: "16px 50px" }}>
+        <Footer
+          style={{
+            textAlign: "center",
+            background: "#f0f2f5",
+            padding: "16px 50px",
+          }}
+        >
           © 2026 Nepal Designers and Builders. All rights reserved.
         </Footer>
       </Layout>

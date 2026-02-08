@@ -26,15 +26,16 @@ const LoginPage = () => {
   const [form] = Form.useForm();
   const navigate = useNavigate();
   const { loading, postData } = usePostAPI<LoginResponse>(
-    "architecture-web-app/auth/login"
+    "architecture-web-app/auth/login",
   );
 
   useEffect(() => {
     const token = localStorage.getItem("authToken");
     const cookieToken = Cookies.get("authToken");
-  
+
     if (token && cookieToken) {
-      const redirectPath = localStorage.getItem("redirectPath") || "/admin/banner";
+      const redirectPath =
+        localStorage.getItem("redirectPath") || "/admin/banner";
       localStorage.removeItem("redirectPath");
       navigate(redirectPath);
     }
@@ -108,7 +109,7 @@ const LoginPage = () => {
           >
             <Form.Item
               name="email"
-              label="Username"
+              label="Email"
               rules={[
                 { required: true, message: "Please input your email!" },
                 { type: "email", message: "Please enter a valid email!" },
@@ -117,7 +118,7 @@ const LoginPage = () => {
               <div className="input-wrapper">
                 <div className="input-icon user-icon"></div>
                 <Input
-                  placeholder="Username"
+                  placeholder="Email"
                   className="form-input"
                   disabled={loading}
                 />
@@ -145,9 +146,9 @@ const LoginPage = () => {
               <Form.Item name="remember" valuePropName="checked" noStyle>
                 <Checkbox>Remember me</Checkbox>
               </Form.Item>
-              <Button type="link" className="forgot-password">
+              {/* <Button type="link" className="forgot-password">
                 Forgot Password?
-              </Button>
+              </Button> */}
             </div>
 
             <Form.Item>
