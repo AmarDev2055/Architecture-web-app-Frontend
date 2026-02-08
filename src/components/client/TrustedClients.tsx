@@ -1,7 +1,6 @@
 import { motion } from "framer-motion";
 import useGetAPI from "../../hooks/useGetAPI";
 import LoadingSpinner from "./LoadingSpinner";
-import { useState, useEffect } from "react";
 import { apiUrl } from "../../utils";
 
 interface Client {
@@ -18,17 +17,6 @@ const OurTrustedClients: React.FC = () => {
     loading,
     error,
   } = useGetAPI<Client[]>("architecture-web-app/our-clients/feature");
-  const [isMobile, setIsMobile] = useState(false);
-
-  // Detect mobile view
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth <= 768);
-    };
-    handleResize(); // Initial check
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
 
   if (loading) return <LoadingSpinner />;
   if (error)
@@ -40,10 +28,8 @@ const OurTrustedClients: React.FC = () => {
 
   // Filter out clients with null fileurl
   const validClients = clients?.filter((client) => client.filepath) || [];
-  // Limit to 3 logos in mobile view, duplicate for marquee in desktop
-  const marqueeClients = isMobile
-    ? [...validClients.slice(0, 3), ...validClients.slice(0, 3)] // 3 logos, duplicated
-    : [...validClients, ...validClients]; // All logos, duplicated
+  // Duplicate for seamless looping on all viewports (mobile + desktop)
+  const marqueeClients = [...validClients, ...validClients];
 
   return (
     <section className="trusted-clients">
@@ -58,19 +44,15 @@ const OurTrustedClients: React.FC = () => {
         </motion.h2>
 
         {validClients.length > 0 ? (
-          <div className="trusted-clients__marquee">
-            <motion.div
-              className="trusted-clients__marquee-inner"
-              animate={{ x: ["0%", "-50%"] }}
-              transition={{
-                x: {
-                  repeat: Infinity,
-                  repeatType: "loop",
-                  duration: marqueeClients.length * 0.5, // Adjust speed based on number of logos
-                  ease: "linear",
-                },
-              }}
-            >
+          <div
+            className="trusted-clients__marquee"
+            style={
+              {
+                "--marquee-duration": `${marqueeClients.length * 3.5}s`,
+              } as React.CSSProperties
+            }
+          >
+            <div className="trusted-clients__marquee-inner">
               {marqueeClients.map((client, index) => (
                 <a
                   key={`${client.id}-${index}`}
@@ -86,7 +68,7 @@ const OurTrustedClients: React.FC = () => {
                   />
                 </a>
               ))}
-            </motion.div>
+            </div>
           </div>
         ) : (
           <div className="no-clients-message">
