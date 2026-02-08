@@ -55,11 +55,27 @@ $color-text-secondary: #4a5f73;
     overflow: hidden;
     width: 100%;
     white-space: nowrap;
+    cursor: default;
+
+    &:hover .trusted-clients__marquee-inner {
+      animation-play-state: paused;
+    }
   }
 
   &__marquee-inner {
     display: flex;
     align-items: center;
+    width: max-content;
+    animation: trusted-clients-marquee var(--marquee-duration, 25s) linear infinite;
+  }
+
+  @keyframes trusted-clients-marquee {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
   }
 
   &__logo-wrapper {
