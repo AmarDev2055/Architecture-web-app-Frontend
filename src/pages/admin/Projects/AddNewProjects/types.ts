@@ -35,8 +35,9 @@ export interface DataType {
   createdAt: string;
   updatedAt: string;
   deletedAt: string | null;
-  client: ClientType;
+  client: ClientType | null;
   media: MediaType[];
+  videos: { id: number; video_url: string }[];
 }
 
 export interface ProjectType {

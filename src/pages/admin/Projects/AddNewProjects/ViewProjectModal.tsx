@@ -76,25 +76,25 @@ const ViewProjectModal = ({
               <div>
                 <Typography.Text strong>Name:</Typography.Text>
                 <Typography.Paragraph>
-                  {record.client.fullName}
+                  {record.client?.fullName || "N/A"}
                 </Typography.Paragraph>
               </div>
               <div>
                 <Typography.Text strong>Email:</Typography.Text>
                 <Typography.Paragraph>
-                  {record.client.email}
+                  {record.client?.email || "N/A"}
                 </Typography.Paragraph>
               </div>
               <div>
                 <Typography.Text strong>Mobile:</Typography.Text>
                 <Typography.Paragraph>
-                  {record.client.mobile}
+                  {record.client?.mobile || "N/A"}
                 </Typography.Paragraph>
               </div>
               <div>
                 <Typography.Text strong>Address:</Typography.Text>
                 <Typography.Paragraph>
-                  {record.client.address}
+                  {record.client?.address || "N/A"}
                 </Typography.Paragraph>
               </div>
             </div>
@@ -141,9 +141,25 @@ const ViewProjectModal = ({
               ))}
             </div>
           </div>
+
+          {record.videos && record.videos.length > 0 && (
+            <div style={{ marginTop: "20px" }}>
+              <Typography.Title level={5}>Project Videos:</Typography.Title>
+              <ul>
+                {record.videos.map((video: any) => (
+                  <li key={video.id || Math.random()}>
+                    <a href={video.video_url} target="_blank" rel="noopener noreferrer" style={{ color: "black", fontSize: "16px" }}>
+                      {video.video_url}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
         </div>
-      )}
-    </Modal>
+      )
+      }
+    </Modal >
   );
 };
 

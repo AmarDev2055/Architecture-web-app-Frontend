@@ -1,5 +1,5 @@
 import { Modal, Form, Input, Button, Upload, message, Row, Col, Select, Radio } from "antd";
-import { UploadOutlined } from "@ant-design/icons";
+import { UploadOutlined, PlusOutlined, DeleteOutlined } from "@ant-design/icons";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { apiUrl } from "../../../../utils";
@@ -36,8 +36,28 @@ interface UpdateProjectModalProps {
     status: boolean;
     image?: MediaType | null;
     gallery?: MediaType[];
+    videos?: ({ id: number; video_url: string } | string)[];
   };
 }
+
+// Wrapper so Form.Item's value { id, video_url } is shown as the URL string in the input
+const VideoUrlInput = (props: {
+  value?: { id: number; video_url: string };
+  onChange?: (v: { id: number; video_url: string }) => void;
+  placeholder?: string;
+}) => {
+  const { value, onChange, placeholder, ...rest } = props;
+  return (
+    <Input
+      {...rest}
+      placeholder={placeholder}
+      value={value?.video_url ?? ""}
+      onChange={(e) =>
+        onChange?.({ ...(value || { id: 0, video_url: "" }), video_url: e.target.value })
+      }
+    />
+  );
+};
 
 const UpdateProjectModal = ({
   visible,
@@ -64,7 +84,7 @@ const UpdateProjectModal = ({
         message.error("Failed to fetch project types");
       }
     } catch (error) {
-//  procrastinate(error);
+      //  procrastinate(error);
       message.error("Error fetching project types");
     } finally {
       setLoading(false);
@@ -89,42 +109,45 @@ const UpdateProjectModal = ({
         status: initialValues.status,
         image: initialValues.image
           ? {
-              uid: initialValues.image.id || initialValues.image.filename || initialValues.image.filepath || Math.random().toString(),
-              name: initialValues.image.filename,
-              url: initialValues.image.filepath ? `${apiUrl}/architecture-web-app${initialValues.image.filepath}` : undefined,
-              status: "done",
-              originFileObj: null,
-            }
+            uid: initialValues.image.id || initialValues.image.filename || initialValues.image.filepath || Math.random().toString(),
+            name: initialValues.image.filename,
+            url: initialValues.image.filepath ? `${apiUrl}/architecture-web-app${initialValues.image.filepath}` : undefined,
+            status: "done",
+            originFileObj: null,
+          }
           : null,
         gallery: initialValues.gallery
           ? initialValues.gallery.map((media) => ({
-              uid: media.id || media.filename || media.filepath || Math.random().toString(),
-              name: media.filename,
-              url: media.filepath ? `${apiUrl}/architecture-web-app${media.filepath}` : undefined,
-              status: "done",
-            }))
+            uid: media.id || media.filename || media.filepath || Math.random().toString(),
+            name: media.filename,
+            url: media.filepath ? `${apiUrl}/architecture-web-app${media.filepath}` : undefined,
+            status: "done",
+          }))
           : [],
+        videos: (initialValues.videos || []).map((v) =>
+          typeof v === "string" ? { id: 0, video_url: v } : v
+        ),
       });
       // Initialize file lists for preview
       setImageFileList(
         initialValues.image
           ? [{
-              uid: initialValues.image.id || initialValues.image.filename || initialValues.image.filepath || Math.random().toString(),
-              name: initialValues.image.filename,
-              url: initialValues.image.filepath ? `${apiUrl}/architecture-web-app${initialValues.image.filepath}` : undefined,
-              status: "done",
-              originFileObj: null,
-            }]
+            uid: initialValues.image.id || initialValues.image.filename || initialValues.image.filepath || Math.random().toString(),
+            name: initialValues.image.filename,
+            url: initialValues.image.filepath ? `${apiUrl}/architecture-web-app${initialValues.image.filepath}` : undefined,
+            status: "done",
+            originFileObj: null,
+          }]
           : []
       );
       setGalleryFileList(
         initialValues.gallery
           ? initialValues.gallery.map((media) => ({
-              uid: media.id || media.filename || media.filepath || Math.random().toString(),
-              name: media.filename,
-              url: media.filepath ? `${apiUrl}/architecture-web-app${media.filepath}` : undefined,
-              status: "done",
-            }))
+            uid: media.id || media.filename || media.filepath || Math.random().toString(),
+            name: media.filename,
+            url: media.filepath ? `${apiUrl}/architecture-web-app${media.filepath}` : undefined,
+            status: "done",
+          }))
           : []
       );
     }
@@ -190,6 +213,25 @@ const UpdateProjectModal = ({
     return true;
   };
 
+  // Handle video URL removal (call API for existing videos, then remove from form)
+  const handleVideoRemove = async (index: number, remove: (index: number) => void) => {
+    const videos = form.getFieldValue("videos") || [];
+    const item = videos[index];
+    const videoId = item?.id;
+    if (videoId && videoId > 0) {
+      try {
+        await axios.delete(`${apiUrl}/architecture-web-app/projects/project-video/${videoId}`, {
+          withCredentials: true,
+        });
+        message.success("Video URL deleted successfully");
+      } catch (error) {
+        message.error("Failed to delete video URL");
+        return;
+      }
+    }
+    remove(index);
+  };
+
   const onFinish = async (values: any) => {
     onUpdate(values);
   };
@@ -202,7 +244,13 @@ const UpdateProjectModal = ({
         form
           .validateFields()
           .then((values) => {
-            onFinish(values);
+            const submitValues = {
+              ...values,
+              videos: (values.videos || []).map((v: any) =>
+                typeof v === "string" ? v : v.video_url
+              ),
+            };
+            onFinish(submitValues);
             form.resetFields();
             setImageFileList([]);
             setGalleryFileList([]);
@@ -306,7 +354,7 @@ const UpdateProjectModal = ({
               <Input placeholder="Enter client address" />
             </Form.Item>
           </Col>
-          
+
           <Col span={24}>
             <Form.Item
               name="description"
@@ -368,6 +416,41 @@ const UpdateProjectModal = ({
                 <Button icon={<UploadOutlined />}>Upload Photo</Button>
               </Upload>
             </Form.Item>
+          </Col>
+          <Col span={24}>
+            <Form.List name="videos">
+              {(fields, { add, remove }) => (
+                <>
+                  {fields.map(({ key, name, ...restField }) => (
+                    <Row key={key} gutter={16} align="middle">
+                      <Col span={22}>
+                        <Form.Item
+                          {...restField}
+                          name={[name]}
+                          label="Video URL"
+                          rules={[
+                            { required: false, message: "Please enter a video URL" },
+                          ]}
+                        >
+                          <VideoUrlInput placeholder="Enter YouTube Video URL" />
+                        </Form.Item>
+                      </Col>
+                      <Col span={2}>
+                        <DeleteOutlined
+                          onClick={() => handleVideoRemove(name, remove)}
+                          style={{ color: "red", cursor: "pointer" }}
+                        />
+                      </Col>
+                    </Row>
+                  ))}
+                  <Form.Item>
+                    <Button type="dashed" onClick={() => add({ id: 0, video_url: "" })} block icon={<PlusOutlined />}>
+                      Add Video URL
+                    </Button>
+                  </Form.Item>
+                </>
+              )}
+            </Form.List>
           </Col>
         </Row>
       </Form>
