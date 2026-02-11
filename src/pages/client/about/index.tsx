@@ -13,6 +13,8 @@ interface TeamMember {
   name: string;
   designation: string;
   order: number;
+  email: string;
+  contact_no: string;
   filepath: string | null;
   additionalInfo?: string;
 }
@@ -252,17 +254,26 @@ const AboutUsPage = () => {
                         />
                         <div className="team-social-links">
                           <a
-                            href="tel:+1234567890"
-                            className="social-link-item"
+                            href={
+                              member.contact_no
+                                ? `tel:+977-${member.contact_no}`
+                                : "#"
+                            }
+                            className={`social-link-item ${
+                              !member.contact_no ? "disabled" : ""
+                            }`}
                           >
                             <svg viewBox="0 0 24 24" fill="currentColor">
                               <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z" />
                             </svg>
+
                             <span>Phone</span>
                           </a>
                           <a
-                            href="mailto:info@example.com"
-                            className="social-link-item"
+                            href={member.email ? `mailto:${member.email}` : "#"}
+                            className={`social-link-item ${
+                              !member.email ? "disabled" : ""
+                            }`}
                             target="_blank"
                             rel="noopener noreferrer"
                           >
@@ -419,7 +430,7 @@ const AboutUsPage = () => {
                 <iframe
                   src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d220.72649644255276!2d85.3146202!3d27.728895!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8c9ac7b0fcfa4e5d%3A0x70031c2fed208c2c!2sGhar%20Plot%20Nepal!5e0!3m2!1sen!2sqa!4v1770302573915!5m2!1sen!2sqa"
                   width="100%"
-                  height="100%"
+                  height="600px"
                   style={{ border: 0 }}
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
