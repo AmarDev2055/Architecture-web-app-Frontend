@@ -111,7 +111,20 @@ const ProjectDetails = () => {
     ? `${apiUrl}/architecture-web-app${featureImage}`
     : undefined;
   if (loading) return <div className="loading-container">Loading...</div>;
-  if (!client) return <div className="not-found">Project not found</div>;
+  if (!client) {
+    return (
+      <div className="project-details-container">
+        <ProjectInnerHeader title="PROJECTS" currentPage="PROJECTS" />
+        <div className="not-found">
+          <h2>No project found</h2>
+          <Link to="/projects" className="back-button">
+            <ArrowLeft className="back-icon" />
+            Back to Projects
+          </Link>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <>
