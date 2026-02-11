@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Modal, Form, Input, Upload, Button, Row, Col, Switch, InputNumber } from "antd";
-import { UploadOutlined, UserOutlined, PhoneOutlined, OrderedListOutlined } from "@ant-design/icons";
+import { UploadOutlined, UserOutlined, PhoneOutlined, OrderedListOutlined, MailOutlined } from "@ant-design/icons";
 import { UploadFile } from "antd/es/upload/interface";
 import LoadingSpinner from "../../../components/client/LoadingSpinner";
 import { apiUrl } from "../../../utils";
@@ -13,6 +13,7 @@ interface UpdateModalProps {
         name: string;
         designation: string;
         contact_no: string;
+        email: string | null;
         is_featured: boolean;
         order: number;
         filepath?: string | null;
@@ -37,6 +38,7 @@ const UpdateModal: React.FC<UpdateModalProps> = ({
                 name: initialValues.name,
                 designation: initialValues.designation,
                 contact_no: initialValues.contact_no,
+                email: initialValues.email,
                 is_featured: initialValues.is_featured,
                 order: initialValues.order,
             });
@@ -75,14 +77,14 @@ const UpdateModal: React.FC<UpdateModalProps> = ({
         setFileList(fileList.slice(-1));
     };
 
-    const handleUpdate = async () => {
+    const handleFinish = async (values: any) => {
         try {
             setLoading(true);
-            const values = await form.validateFields();
             const formData = new FormData();
             formData.append("name", values.name);
             formData.append("designation", values.designation);
             formData.append("contact_no", values.contact_no);
+            formData.append("email", values.email);
             formData.append("is_featured", values.is_featured ? "true" : "false");
             formData.append("order", values.order.toString());
 
@@ -126,8 +128,8 @@ const UpdateModal: React.FC<UpdateModalProps> = ({
                 <Button
                     key="submit"
                     type="primary"
-                    onClick={handleUpdate}
-                    disabled={loading}
+                    onClick={() => form.submit()}
+                    loading={loading}
                 >
                     Submit
                 </Button>,
@@ -136,7 +138,16 @@ const UpdateModal: React.FC<UpdateModalProps> = ({
             className="testimonial-modal"
             destroyOnClose
         >
-            <Form form={form} layout="vertical" className="compact-form">
+            <Form
+                form={form}
+                layout="vertical"
+                className="compact-form"
+                onFinish={handleFinish}
+                onFinishFailed={(errorInfo) => {
+                    console.error("Validation Failed:", errorInfo);
+                    setLoading(false);
+                }}
+            >
                 <Row gutter={16}>
                     <Col span={12}>
                         <Form.Item
@@ -176,6 +187,20 @@ const UpdateModal: React.FC<UpdateModalProps> = ({
                                 prefix={<PhoneOutlined />}
                                 placeholder="Enter contact number"
                                 disabled={loading}
+                            />
+                        </Form.Item>
+                    </Col>
+                    <Col span={12}>
+                        <Form.Item
+                            label="Email"
+                            name="email"
+                            rules={[{ required: true, message: "Required" }]}
+                        >
+                            <Input
+                                prefix={<MailOutlined />}
+                                placeholder="Enter email"
+                                disabled={loading}
+                                type="email"
                             />
                         </Form.Item>
                     </Col>

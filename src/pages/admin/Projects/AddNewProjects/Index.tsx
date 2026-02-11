@@ -85,6 +85,7 @@ const ProjectSetting = () => {
             deletedAt: client.deletedAt,
           },
           media: project.media,
+          videos: project.videos || [],
         }];
       } else {
         fetchedData = response.data.data.map((project: any) => ({
@@ -99,7 +100,7 @@ const ProjectSetting = () => {
           createdAt: project.createdAt,
           updatedAt: project.updatedAt,
           deletedAt: project.deletedAt,
-          client: {
+          client: project.client ? {
             id: project.client.id,
             project_id: project.client.project_id,
             fullName: project.client.fullName,
@@ -109,8 +110,9 @@ const ProjectSetting = () => {
             createdAt: project.client.createdAt,
             updatedAt: project.client.updatedAt,
             deletedAt: project.client.deletedAt,
-          },
+          } : null,
           media: project.media || [],
+          videos: project.videos ? project.videos.map((v: any) => typeof v === 'string' ? { id: 0, video_url: v } : { id: v.id, video_url: v.video_url }) : [],
         }));
       }
 
@@ -136,8 +138,8 @@ const ProjectSetting = () => {
           item.name,
           item.location,
           item.site_area,
-          item.client.fullName,
-          item.client.mobile,
+          item.client?.fullName,
+          item.client?.mobile,
         ].some((field) => field?.toString().toLowerCase().includes(lowerCaseValue))
       );
       setFilteredData(filtered);
@@ -167,6 +169,7 @@ const ProjectSetting = () => {
     status: boolean;
     image: any;
     gallery: any[];
+    videos?: string[];
     retainedMediaIds: number[];
   }) => {
     setPageLoading(true);
@@ -204,6 +207,18 @@ const ProjectSetting = () => {
         formData.append("retainedMediaIds", JSON.stringify(values.retainedMediaIds));
         console.log("Retained media IDs:", values.retainedMediaIds);
       }
+
+      // Append videos
+      if (values.videos && values.videos.length > 0) {
+        values.videos.forEach((videoUrl) => {
+          // Check if video already exists in the original record
+          const exists = editingRecord?.videos?.some((v) => v.video_url === videoUrl);
+          if (!exists) {
+            formData.append("video_url[]", videoUrl);
+          }
+        });
+      }
+
 
       // Log FormData for debugging
       for (const [key, value] of formData.entries()) {
@@ -304,6 +319,16 @@ const ProjectSetting = () => {
         message.error("Please upload at least one gallery image");
         setPageLoading(false);
         return;
+      }
+
+      // Append videos
+      if (values.videos && Array.isArray(values.videos) && values.videos.length > 0) {
+        values.videos.forEach((url: string) => {
+          if (url) {
+            formData.append("video_url[]", url);
+            console.log(`Video URL appended: ${url}`);
+          }
+        });
       }
 
       for (const [key, value] of formData.entries()) {
@@ -470,13 +495,14 @@ const ProjectSetting = () => {
                 location: editingRecord.location,
                 site_area: editingRecord.site_area,
                 description: editingRecord.description,
-                client_name: editingRecord.client.fullName,
-                client_email: editingRecord.client.email,
-                client_mobile: editingRecord.client.mobile,
-                client_address: editingRecord.client.address,
+                client_name: editingRecord.client?.fullName || "",
+                client_email: editingRecord.client?.email || "",
+                client_mobile: editingRecord.client?.mobile || "",
+                client_address: editingRecord.client?.address || "",
                 status: editingRecord.status,
                 image: editingRecord.media.find((m: MediaType) => m.image_type === "feature") || null,
                 gallery: editingRecord.media.filter((m: MediaType) => m.image_type === "gallery"),
+                videos: editingRecord.videos || [],
               }}
             />
           )}

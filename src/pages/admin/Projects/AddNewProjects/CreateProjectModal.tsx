@@ -1,5 +1,5 @@
 import { Modal, Form, Input, Button, Upload, message, Row, Col, Select, Radio } from "antd";
-import { UploadOutlined } from "@ant-design/icons";
+import { UploadOutlined, PlusOutlined, DeleteOutlined } from "@ant-design/icons";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { apiUrl } from "../../../../utils";
@@ -139,7 +139,7 @@ const CreateProjectModal = ({
               />
             </Form.Item>
           </Col>
-          
+
           <Col span={8}>
             <Form.Item
               name="location"
@@ -250,6 +250,39 @@ const CreateProjectModal = ({
                 <Button icon={<UploadOutlined />}>Upload Photo</Button>
               </Upload>
             </Form.Item>
+          </Col>
+          <Col span={24}>
+            <Form.List name="videos">
+              {(fields, { add, remove }) => (
+                <>
+                  {fields.map(({ key, name, ...restField }) => (
+                    <Row key={key} gutter={16} align="middle">
+                      <Col span={22}>
+                        <Form.Item
+                          {...restField}
+                          name={[name]}
+                          label="Video URL" // Optional: hide label for subsequent items if desired
+                          rules={[
+                            { required: false, message: "Please enter a video URL" }, // Not required as per user request
+                            // { type: 'url', message: 'Please enter a valid URL' } // Optional: add URL validation
+                          ]}
+                        >
+                          <Input placeholder="Enter YouTube Video URL" />
+                        </Form.Item>
+                      </Col>
+                      <Col span={2}>
+                        <DeleteOutlined onClick={() => remove(name)} style={{ color: 'red', cursor: 'pointer' }} />
+                      </Col>
+                    </Row>
+                  ))}
+                  <Form.Item>
+                    <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
+                      Add Video URL
+                    </Button>
+                  </Form.Item>
+                </>
+              )}
+            </Form.List>
           </Col>
         </Row>
       </Form>

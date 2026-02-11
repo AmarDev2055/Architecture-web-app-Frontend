@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Modal, Form, Input, Upload, Button, Row, Col, Switch, InputNumber } from "antd";
-import { UploadOutlined, UserOutlined, PhoneOutlined, OrderedListOutlined } from "@ant-design/icons";
+import { UploadOutlined, UserOutlined, PhoneOutlined, OrderedListOutlined, MailOutlined } from "@ant-design/icons";
 import { UploadFile } from "antd/es/upload/interface";
 import LoadingSpinner from "../../../components/client/LoadingSpinner";
 
@@ -35,6 +35,7 @@ const CreateModal: React.FC<CreateModalProps> = ({
             if (file.size && file.size / 1024 / 1024 > 2) {
                 setImageError("Image must be smaller than 2MB!");
                 setImageList([]);
+                form.setFieldsValue({ image: [] });
                 return;
             } else {
                 setImageError(null);
@@ -42,17 +43,22 @@ const CreateModal: React.FC<CreateModalProps> = ({
         } else {
             setImageError(null);
         }
-        setImageList(fileList.slice(-1));
+
+        const latestFileList = fileList.slice(-1);
+        setImageList(latestFileList);
+        // keep Form's "image" field in sync so its required rule works
+        form.setFieldsValue({ image: latestFileList });
     };
 
-    const handleCreate = async () => {
+    const handleFinish = async (values: any) => {
         try {
             setLoading(true);
-            const values = await form.validateFields();
+
             const formData = new FormData();
-            formData.append("name", values.name); // Changed key to 'name' as requested
+            formData.append("name", values.name);
             formData.append("designation", values.designation);
             formData.append("contact_no", values.contact_no);
+            formData.append("email", values.email);
             formData.append("is_featured", values.is_featured ? "true" : "false");
             formData.append("order", values.order.toString());
 
@@ -64,10 +70,17 @@ const CreateModal: React.FC<CreateModalProps> = ({
             form.resetFields();
             setImageList([]);
         } catch (error) {
-            console.error("Validation Failed:", error);
+            console.error("Create team member failed:", error);
         } finally {
             setLoading(false);
         }
+    };
+
+    const handleFinishFailed = (errorInfo: any) => {
+        // keep modal open and just log the validation errors;
+        // AntD will display the "Required" messages next to fields.
+        console.error("Validation Failed:", errorInfo);
+        setLoading(false);
     };
 
     if (loading) {
@@ -86,8 +99,8 @@ const CreateModal: React.FC<CreateModalProps> = ({
                 <Button
                     key="submit"
                     type="primary"
-                    onClick={handleCreate}
-                    disabled={loading}
+                    onClick={() => form.submit()}
+                    loading={loading}
                 >
                     Submit
                 </Button>,
@@ -96,7 +109,13 @@ const CreateModal: React.FC<CreateModalProps> = ({
             className="testimonial-modal"
             destroyOnClose
         >
-            <Form form={form} layout="vertical" className="compact-form">
+            <Form
+                form={form}
+                layout="vertical"
+                className="compact-form"
+                onFinish={handleFinish}
+                onFinishFailed={handleFinishFailed}
+            >
                 <Row gutter={16}>
                     <Col span={12}>
                         <Form.Item
@@ -136,6 +155,20 @@ const CreateModal: React.FC<CreateModalProps> = ({
                                 prefix={<PhoneOutlined />}
                                 placeholder="Enter contact number"
                                 disabled={loading}
+                            />
+                        </Form.Item>
+                    </Col>
+                    <Col span={12}>
+                        <Form.Item
+                            label="Email"
+                            name="email"
+                            rules={[{ required: true, message: "Required" }]}
+                        >
+                            <Input
+                                prefix={<MailOutlined />}
+                                placeholder="Enter email"
+                                disabled={loading}
+                                type="email"
                             />
                         </Form.Item>
                     </Col>

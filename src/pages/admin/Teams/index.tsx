@@ -13,6 +13,7 @@ interface DataType {
     name: string;
     designation: string;
     contact_no: string;
+    email: string | null;
     is_featured: boolean;
     order: number;
     filename: string | null;
@@ -42,6 +43,7 @@ const TeamsSetting = () => {
                 name: teamMember.name,
                 designation: teamMember.designation,
                 contact_no: teamMember.contact_no,
+                email: teamMember.email,
                 is_featured: teamMember.is_featured,
                 order: teamMember.order,
                 filepath: teamMember.filepath || null,
@@ -161,6 +163,7 @@ const TeamsSetting = () => {
             formData.append("name", record.name);
             formData.append("designation", record.designation);
             formData.append("contact_no", record.contact_no);
+            formData.append("email", record.email ?? "");
             formData.append("is_featured", checked ? "true" : "false");
             formData.append("order", record.order.toString());
             if (record.filepath) {
@@ -216,6 +219,23 @@ const TeamsSetting = () => {
             title: "Contact No",
             dataIndex: "contact_no",
             key: "contact_no",
+        },
+        {
+            title: "Email",
+            dataIndex: "email",
+            key: "email",
+            ellipsis: false,
+            render: (email: string | null) => (
+                <span
+                    style={{
+                        whiteSpace: "normal",
+                        wordBreak: "break-word",
+                        lineHeight: 1.4,
+                    }}
+                >
+                    {email || "N/A"}
+                </span>
+            ),
         },
         {
             title: "Is Featured",
