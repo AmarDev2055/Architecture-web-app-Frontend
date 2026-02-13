@@ -25,7 +25,6 @@ import BlogsAdmin from "../pages/admin/Blogs/Index";
 import Blogs from "../pages/client/Blogs/index";
 import GoogleAnalyticsTracker from "../components/GoogleAnalyticsTracker";
 
-
 const RouteConfig = () => {
   return (
     <Suspense fallback="Loading...">
@@ -46,9 +45,16 @@ const RouteConfig = () => {
 
           {/* 
           <Route path="/client/:id" element={<ClientDetails />} /> */}
-          <Route path="/projects/:id" element={<ProjectDetails />} />
-          {/* <Route path="/projects/:id" element={<ProjectDetails />} /> */}
-          {/* <Route path="projects/details/:title" element={<ProjectDetails />} /> */}
+          <Route
+            path="/projects/:id"
+            element={<ProjectDetails isClient={false} />}
+          />
+
+          {/* Project Details - Client Projects (uses get-project) */}
+          <Route
+            path="/projectByClient/:id"
+            element={<ProjectDetails isClient={true} />}
+          />
 
           <Route path="page-not-found" element={<PageNotFound />} />
         </Route>

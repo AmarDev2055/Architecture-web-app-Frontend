@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import InnerHeader from "../../../components/client/InnerHeader";
 import axios from "axios";
 import { apiUrl } from "../../../utils";
+import { encodeId } from "../../../utils/idEncoder";
 import ScrollToTop from "../../../components/client/ScrollToTop";
 import "./projects_new.css";
 
@@ -52,7 +53,7 @@ const Projects = () => {
   const fetchProjectTypes = async () => {
     try {
       const response = await axios.get(
-        `${apiUrl}/architecture-web-app/projects/active-project-types/`
+        `${apiUrl}/architecture-web-app/projects/active-project-types/`,
       );
 
       const fetchedData = response.data.data
@@ -76,21 +77,20 @@ const Projects = () => {
     setIsLoading(true);
     try {
       const response = await axios.get(
-        `${apiUrl}/architecture-web-app/projects/get-clients/${id}`
+        `${apiUrl}/architecture-web-app/projects/get-clients/${id}`,
       );
-      setClients(response.data.data);
+      setClients(response.data.data || []);
     } catch (error) {
       console.error("Error fetching clients:", error);
+      setClients([]);
     } finally {
       setIsLoading(false);
     }
   };
 
-  const encodeId = (id: number) => btoa(id.toString());
-
   const handleClientClick = (clientId: number) => {
     const encodedId = encodeId(clientId);
-    navigate(`/projects/${encodedId}`);
+    navigate(`/projectByClient/${encodedId}`);
   };
 
   const handleCategoryClick = (key: string) => {
@@ -150,12 +150,14 @@ const Projects = () => {
                 {clients.length > 0 ? (
                   clients.map((client, index) => {
                     const featureImage = client.project?.media?.find(
-                      (media) => media.image_type === "feature"
+                      (media) => media.image_type === "feature",
                     );
 
                     const fullImagePath = featureImage
                       ? `${apiUrl}/architecture-web-app${featureImage.filepath}`
                       : "";
+
+                    if (!featureImage) return null;
 
                     return (
                       <motion.article
@@ -166,31 +168,37 @@ const Projects = () => {
                         transition={{ duration: 0.4, delay: index * 0.05 }}
                         onClick={() => handleClientClick(client.id)}
                       >
-                        {featureImage && (
-                          <>
-                            <div className="project-image">
-                              <img
-                                src={fullImagePath}
-                                alt={client.project.name}
-                                loading="lazy"
-                              />
-                              <div className="image-overlay">
-                                <span className="view-label">View Details</span>
-                              </div>
-                            </div>
-                            <div className="project-info">
-                              <h3 className="project-title">
-                                {client.project.name}
-                              </h3>
-                              <p className="project-client">
-                                {client.fullName}
-                              </p>
-                              <p className="project-location">
-                                {client.address}
-                              </p>
-                            </div>
-                          </>
-                        )}
+                        <div className="project-image">
+                          <img
+                            src={fullImagePath}
+                            alt={client.project.name}
+                            loading="lazy"
+                          />
+                          <div className="image-overlay">
+                            <span className="view-label">View</span>
+                          </div>
+                        </div>
+                        <div className="project-info">
+                          <h3 className="project-title">
+                            {client.project.name}
+                          </h3>
+                          <p className="project-location">
+                            <svg
+                              width="10"
+                              height="10"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              strokeWidth="2"
+                              style={{ marginRight: "2px" }}
+                            >
+                              <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" />
+                              <circle cx="12" cy="9" r="2.5" />
+                            </svg>
+                            {client.address || client.project.location}
+                          </p>
+                          <p className="project-client">{client.fullName}</p>
+                        </div>
                       </motion.article>
                     );
                   })

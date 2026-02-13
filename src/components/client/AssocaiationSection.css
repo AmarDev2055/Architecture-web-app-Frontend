@@ -1,5 +1,5 @@
 .association-section {
-  padding: 6rem 5vw 5rem;
+  padding: clamp(4rem, 8vw, 6rem) 5vw clamp(3.5rem, 7vw, 5rem);
   background: linear-gradient(135deg, #f8fafc 0%, #eef2ff 100%);
   position: relative;
   overflow: hidden;
@@ -18,41 +18,41 @@
 }
 
 .content-wrapper {
-  /* max-width: 1100px; */
-  display: flex;
-  /* justify-content:; */
-  /* margin: 0 auto; */
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
 }
 
 .section-title {
   text-align: center;
-  font-size: clamp(2.4rem, 5.5vw, 3.8rem);
+  font-size: clamp(2.1rem, 5.5vw, 3.8rem);
   font-weight: 800;
   color: #0f172a;
-  margin-bottom: 0.6rem;
-  letter-spacing: -0.8px;
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.025em;
+  line-height: 1.1;
 }
 
 .section-title span {
-  color: #be1e2d; /* your requested red color */
+  color: #be1e2d;
   font-weight: 900;
 }
 
 .section-subtitle {
   text-align: center;
-  font-size: 1.15rem;
+  font-size: clamp(1.05rem, 2.4vw, 1.18rem);
   color: #475569;
-  max-width: 640px;
-  margin: 0 auto 3.2rem;
+  max-width: 680px;
+  margin: 0 auto 2.8rem;
   line-height: 1.6;
 }
 
-/* ── New side-by-side layout ── */
+/* ── Partners grid ── */
 .partners-row {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+  gap: clamp(1.8rem, 4vw, 2.8rem);
   justify-content: center;
-  gap: 2.5rem 4rem;
 }
 
 .partner-block {
@@ -60,41 +60,40 @@
   align-items: center;
   text-decoration: none;
   color: inherit;
-  max-width: 480px;
   background: white;
   border-radius: 16px;
-  padding: 1.6rem 2rem;
-  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.06);
+  padding: clamp(1.4rem, 2.2vw, 1.8rem) clamp(1.5rem, 2.5vw, 2.2rem);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.07);
   transition: all 0.32s ease;
-  border: 1px solid rgba(190, 30, 45, 0.08);
+  border: 1px solid rgba(190, 30, 45, 0.07);
 }
 
 .partner-block:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.12);
-  border-color: rgba(190, 30, 45, 0.25);
+  transform: translateY(-8px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.13);
+  border-color: rgba(190, 30, 45, 0.22);
 }
 
 .partner-logo-side {
   flex-shrink: 0;
-  width: 110px;
-  height: 110px;
+  width: clamp(90px, 11vw, 120px);
+  height: clamp(90px, 11vw, 120px);
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-right: 1.8rem;
+  margin-right: clamp(1.2rem, 2.2vw, 1.8rem);
 }
 
 .partner-logo {
   max-width: 100%;
   max-height: 100%;
   object-fit: contain;
-  filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.12));
+  filter: drop-shadow(0 3px 10px rgba(0, 0, 0, 0.11));
   transition: transform 0.35s ease;
 }
 
 .partner-block:hover .partner-logo {
-  transform: scale(1.06);
+  transform: scale(1.07);
 }
 
 .partner-info {
@@ -102,46 +101,89 @@
 }
 
 .partner-name {
-  font-size: 1.45rem;
+  font-size: clamp(1.3rem, 2.4vw, 1.5rem);
   font-weight: 700;
   color: #1e293b;
   margin: 0 0 0.5rem;
+  line-height: 1.2;
 }
 
 .partner-desc {
-  font-size: 1.02rem;
+  font-size: clamp(0.97rem, 2.1vw, 1.03rem);
   color: #64748b;
-  line-height: 1.55;
-  margin: 0 0 0.9rem;
+  line-height: 1.58;
+  margin: 0 0 1rem;
 }
 
 .visit-link {
-  font-size: 1.03rem;
+  font-size: clamp(0.98rem, 2vw, 1.04rem);
   font-weight: 600;
-  color: var(--partner-accent, #be1e2d);
+  color: #be1e2d;
   transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
 }
 
 .partner-block:hover .visit-link {
-  color: #be1e2d;
-  padding-left: 0.3rem;
+  color: #991822;
+  padding-left: 0.25rem;
 }
 
-/* Mobile – stack vertically */
+/* ── Breakpoints ── */
+
 @media (max-width: 900px) {
   .partners-row {
-    flex-direction: column;
-    align-items: center;
-    gap: 2rem;
+    grid-template-columns: minmax(320px, 480px);
+    justify-content: center;
   }
+
   .partner-block {
-    max-width: 420px;
-    padding: 1.4rem 1.8rem;
+    padding: 1.4rem 1.6rem;
   }
+
   .partner-logo-side {
     width: 100px;
     height: 100px;
     margin-right: 1.4rem;
-    margin-bottom: 0;
+  }
+
+  .section-subtitle {
+    margin-bottom: 2.4rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .association-section {
+    padding-left: 4vw;
+    padding-right: 4vw;
+  }
+
+  .partner-block {
+    flex-direction: column;
+    text-align: center;
+    padding: 1.8rem 1.5rem;
+  }
+
+  .partner-logo-side {
+    margin: 0 0 1.2rem 0;
+    width: 110px;
+    height: 110px;
+  }
+
+  .partner-info {
+    text-align: center;
+  }
+
+  .partner-name {
+    margin-bottom: 0.6rem;
+  }
+
+  .partner-desc {
+    margin-bottom: 1.1rem;
+  }
+
+  .visit-link {
+    justify-content: center;
   }
 }
