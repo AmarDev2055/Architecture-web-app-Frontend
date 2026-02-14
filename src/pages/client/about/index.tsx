@@ -428,7 +428,7 @@ const AboutUsPage = () => {
             <Col xs={24} lg={12}>
               <div className="map-container">
                 <iframe
-                  src="https://www.google.com/maps/embed?pb=!4v1771088206903!6m8!1m7!1s2RQ3p4O16EShNk4mMQ7Xrg!2m2!1d27.72892652160818!2d85.31475237308362!3f277.6053322491907!4f7.84354388556639!5f0.4000000000000002"
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3531.625669235054!2d85.31203967439163!3d27.728841724545003!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8c9ac7b0fcfa4e5d%3A0x70031c2fed208c2c!2sGhar%20Plot%20Nepal!5e0!3m2!1sen!2sqa!4v1771089167543!5m2!1sen!2sqa"
                   width="100%"
                   height="600px"
                   style={{ border: 0 }}

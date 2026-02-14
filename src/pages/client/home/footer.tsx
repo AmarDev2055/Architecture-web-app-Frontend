@@ -62,7 +62,7 @@ const Footer = () => {
                       style={{ color: "#b64141" }}
                     />
                     <a
-                      href="https://maps.app.goo.gl/VmSdjo44rejfd9ni7"
+                      href="https://maps.app.goo.gl/nnttTrBwm5rYezYy8"
                       target="_blank"
                       rel="noopener noreferrer"
                     >
