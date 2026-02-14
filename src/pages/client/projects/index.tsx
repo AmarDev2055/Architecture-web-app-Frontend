@@ -7,6 +7,7 @@ import { apiUrl } from "../../../utils";
 import { encodeId } from "../../../utils/idEncoder";
 import ScrollToTop from "../../../components/client/ScrollToTop";
 import "./projects_new.css";
+import LoadingSpinner from "../../../components/client/LoadingSpinner";
 
 interface ProjectTypes {
   key: string;
@@ -131,11 +132,7 @@ const Projects = () => {
           </div>
 
           {/* Loading State */}
-          {isLoading && (
-            <div className="loading-state">
-              <div className="loader"></div>
-            </div>
-          )}
+          {isLoading && <LoadingSpinner />}
 
           {/* Projects Grid */}
           <AnimatePresence mode="wait">

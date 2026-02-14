@@ -3,6 +3,7 @@ import React from "react";
 import gharPlotLogo from "../../assets/images/548361845_122100870513014614_1778832371218339877_n.jpg";
 import interiorConstruction from "../../assets/images/449467072_122107858814373129_7939150935589759784_n.jpg";
 import "../client/AssocaiationSection.css";
+import { motion } from "framer-motion";
 
 interface Partner {
   name: string;
@@ -34,9 +35,14 @@ export default function AssociationSection() {
     <section className="association-section">
       <div className="content-wrapper">
         <div>
-          <h2 className="section-title">
-            Trusted <span>Association</span> Partners
-          </h2>
+          <motion.h2
+            className="trusted-clients__title"
+            initial={{ opacity: 0, translateY: 50 }}
+            whileInView={{ opacity: 1, translateY: 0 }}
+            transition={{ duration: 0.6 }}
+          >
+            OUR TRUSTED PARTNERS
+          </motion.h2>
           {/* <p className="section-subtitle">
             Working together with leading names in real estate and construction
             across Nepal

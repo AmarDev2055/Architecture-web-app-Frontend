@@ -62,11 +62,11 @@ const Footer = () => {
                       style={{ color: "#b64141" }}
                     />
                     <a
-                      href="https://maps.app.goo.gl/LN6fCUCPy35TP9T7A"
+                      href="https://maps.app.goo.gl/VmSdjo44rejfd9ni7"
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      Samakhhusi - 26, Kathmandu Nepal{" "}
+                      Samakhhusi - 26, Kathmandu{" "}
                     </a>
                   </div>
                   <div
@@ -176,6 +176,28 @@ const Footer = () => {
                     style={{ color: "#b64141" }}
                   />{" "}
                   +977-9701364188
+                </a>
+                <a
+                  className="footer-call-to-action-link"
+                  href="tel:+977-9851340040"
+                  target="_self"
+                >
+                  <FontAwesomeIcon
+                    icon={faPhone}
+                    style={{ color: "#b64141" }}
+                  />{" "}
+                  +977-9851340040
+                </a>
+                <a
+                  className="footer-call-to-action-link"
+                  href="tel:01-5926740"
+                  target="_self"
+                >
+                  <FontAwesomeIcon
+                    icon={faPhone}
+                    style={{ color: "#b64141" }}
+                  />{" "}
+                  01-5926740
                 </a>
                 <a
                   className="footer-call-to-action-link"

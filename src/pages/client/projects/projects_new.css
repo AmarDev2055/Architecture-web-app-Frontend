@@ -91,7 +91,7 @@
 /* Projects Grid - 3 Columns */
 .projects-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 20px;
 }
 
@@ -206,9 +206,10 @@
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
   display: flex;
   align-items: center;
-  font-variant: all-small-caps;
+  font-variant: small-caps;
   white-space: nowrap;
   overflow: hidden;
+  color: #f0f0f0;
   text-overflow: ellipsis;
 }
 
