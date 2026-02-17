@@ -191,6 +191,8 @@ const UpdateModal: React.FC<UpdateModalProps> = ({
                 rows={4}
                 placeholder="Enter blog description"
                 disabled={loading}
+                maxLength={250}
+                showCount
               />
             </Form.Item>
           </Col>

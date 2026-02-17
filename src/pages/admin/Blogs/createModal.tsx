@@ -133,6 +133,8 @@ const CreateModal: React.FC<CreateModalProps> = ({
                 rows={4}
                 placeholder="Enter blog description"
                 disabled={loading}
+                maxLength={250}
+                showCount
               />
             </Form.Item>
           </Col>
